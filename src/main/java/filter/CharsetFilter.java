@@ -1,6 +1,5 @@
 package filter;
 
-import database.connectionpool.ConnectionPool;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -10,10 +9,14 @@ import java.io.IOException;
 /**
  * Created by Alexeev on 26.09.2016.
  */
+
+/**
+ * Charset Filter sets charset to utf-8 for every request and response
+ */
 @WebFilter(filterName = "CharsetFilter", urlPatterns = "/*")
 public class CharsetFilter implements Filter {
 
-    private static final Logger logger = Logger.getLogger(ConnectionPool.class);
+    private static final Logger logger = Logger.getLogger(CharsetFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

@@ -4,7 +4,9 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Coeus - Login page</title>
+
     <link href="css/login.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -22,7 +24,7 @@
         <div class="tab-content">
             <div class="tab-pane fade in active" id="login">
                 <form role="form" method="POST">
-                    <!-- TODO: change field length -->
+                    <!-- TODO: change field length (size = "") -->
                     </br>
                     <div class="form-group">
                         <input class="form-control" placeholder="E-mail" name="email" type="email" required autofocus>
@@ -32,7 +34,7 @@
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                            <input name="rememberme" type="checkbox" >Remember Me
                         </label>
                     </div>
                     <button class="btn btn-sm btn-success" type="submit">Login</button>
@@ -46,6 +48,12 @@
                         <input class="form-control" placeholder="E-mail" name="email" type="email" required autofocus>
                     </div>
                     <div class="form-group">
+                        <input class="form-control" placeholder="First name" name="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Last name" name="lastname" required>
+                    </div>
+                    <div class="form-group">
                         <input class="form-control" placeholder="Password" name="password" type="password" required>
                     </div>
                     <div class="form-group">
@@ -54,7 +62,7 @@
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input name="remember" type="checkbox" value="I am a teacher">I am a teacher
+                            <input name="teacher" type="checkbox" >I am a teacher
                         </label>
                     </div>
                     <button class="btn btn-sm btn-success" type="submit">Register</button>
