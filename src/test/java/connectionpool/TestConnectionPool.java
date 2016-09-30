@@ -22,9 +22,8 @@ public class TestConnectionPool {
 
     @Before
     public void init() {
-        connectionPool = ConnectionPool.getInstance();
         try {
-            connectionPool.initPool();
+            connectionPool = ConnectionPool.getInstance();
         } catch (ConnectionPoolException e) {
             e.printStackTrace();
         }
@@ -50,7 +49,7 @@ public class TestConnectionPool {
     public void testCloseConnection() {
         try {
             Connection connection = connectionPool.takeConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM tests");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
             connectionPool.closeConnection(connection, statement, resultSet);
         } catch (ConnectionPoolException | SQLException e) {

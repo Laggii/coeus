@@ -33,14 +33,14 @@ public class ConnectionPool {
 
     private static final Logger logger = Logger.getLogger(ConnectionPool.class);
 
-
-    private ConnectionPool() {
+    private ConnectionPool() throws ConnectionPoolException {
+        initPool();
         if (instance != null) {
             throw new IllegalStateException("Already initialized.");
         }
     }
 
-    public static ConnectionPool getInstance() {
+    public static ConnectionPool getInstance() throws ConnectionPoolException {
         ConnectionPool result = instance;
         if (result == null) {
             synchronized (ConnectionPool.class) {
@@ -51,29 +51,6 @@ public class ConnectionPool {
             }
         }
         return result;
-    }
-
-    /**
-     * Initialize connection queues in the pool
-     *
-     * @throws ConnectionPoolException
-     */
-    public void initPool() throws ConnectionPoolException {
-        try {
-            initParams();
-            Class.forName(driverName);
-            givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
-            connectionQueue = new ArrayBlockingQueue<>(poolSize);
-            for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user, password);
-                PooledConnection pooledConnection = new PooledConnection(connection);
-                connectionQueue.add(pooledConnection);
-            }
-        } catch (SQLException e) {
-            throw new ConnectionPoolException("SQLException in ConnectionPool", e);
-        } catch (ClassNotFoundException e) {
-            throw new ConnectionPoolException("Can't find database driver class", e);
-        }
     }
 
     /**
@@ -163,6 +140,29 @@ public class ConnectionPool {
      */
     public int getGivenAwayConQueueSize() {
         return givenAwayConQueue.size();
+    }
+
+    /**
+     * Initialize connection queues in the pool
+     *
+     * @throws ConnectionPoolException
+     */
+    private void initPool() throws ConnectionPoolException {
+        try {
+            initParams();
+            Class.forName(driverName);
+            givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
+            for (int i = 0; i < poolSize; i++) {
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PooledConnection pooledConnection = new PooledConnection(connection);
+                connectionQueue.add(pooledConnection);
+            }
+        } catch (SQLException e) {
+            throw new ConnectionPoolException("SQLException in ConnectionPool", e);
+        } catch (ClassNotFoundException e) {
+            throw new ConnectionPoolException("Can't find database driver class", e);
+        }
     }
 
     /**
