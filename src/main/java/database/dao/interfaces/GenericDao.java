@@ -1,7 +1,9 @@
 package database.dao.interfaces;
 
+import model.User;
+
 import java.sql.SQLException;
-import java.util.stream.Stream;
+import java.util.Collection;
 
 /**
  * Created by Alexeev on 29.09.2016.
@@ -43,7 +45,7 @@ public interface GenericDao<T> {
     /**
      * Get all objects from database
      *
-     * @return stream of objects
+     * @return collection of objects
      */
-    Stream<T> getAll() throws SQLException;
+    Collection<User> getAll() throws SQLException;
 }

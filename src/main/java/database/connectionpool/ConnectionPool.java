@@ -201,7 +201,7 @@ public class ConnectionPool {
     /**
      * Implementation of the pooled connection with possibility to return it to connection queue
      *
-     * @see #close()
+     * @see #close
      */
     private class PooledConnection implements Connection {
         private Connection connection;

@@ -10,18 +10,19 @@ public class User {
 
     private final long userId;
 
-    private final String email;
-    private final String hash;
+    private String email;
+    private String hash;
+
     private final String firstName;
     private final String lastName;
 
-    private final char gender;
+    private char gender;
 
-    private final Date birthDate;
+    private Date birthDate;
 
-    private final String phone;
+    private String phone;
 
-    private final int roleId;
+    private int roleId;
 
     private final Timestamp regDate;
 
@@ -65,7 +66,31 @@ public class User {
         return regDate;
     }
 
-    private User(UserBuilder builder) {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    private User(Builder builder) {
         userId = builder.userId;
         email = builder.email;
         hash = builder.hash;
@@ -78,7 +103,7 @@ public class User {
         regDate = builder.regDate;
     }
 
-    public static class UserBuilder {
+    public static class Builder {
         private long userId;
 
         private String email;
@@ -96,60 +121,63 @@ public class User {
 
         private Timestamp regDate;
 
-        private UserBuilder() {
+        public Builder() {
         }
 
-        public UserBuilder setId(long userId) {
+        public Builder setId(long userId) {
             this.userId = userId;
             return this;
         }
 
-        public UserBuilder setEmail(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public UserBuilder setHash(String hash) {
+        public Builder setHash(String hash) {
             this.hash = hash;
             return this;
         }
 
-        public UserBuilder setFirstName(String firstName) {
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public UserBuilder setLastName(String lastName) {
+        public Builder setLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public UserBuilder setGender(char gender) {
+        public Builder setGender(char gender) {
             this.gender = gender;
             return this;
         }
 
-        public UserBuilder setBirthDate(Date birthDate) {
+        public Builder setBirthDate(Date birthDate) {
             this.birthDate = birthDate;
             return this;
         }
 
-        public UserBuilder setPhone(String phone) {
+        public Builder setPhone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        public UserBuilder setRoleId(int roleId) {
+        public Builder setRoleId(int roleId) {
             this.roleId = roleId;
             return this;
         }
 
-        public UserBuilder setRegDate(Timestamp regDate) {
+        public Builder setRegDate(Timestamp regDate) {
             this.regDate = regDate;
             return this;
         }
 
         public User build() {
+            if (userId == 0 || email == null || hash == null || lastName == null || firstName == null ) {
+                throw new IllegalArgumentException("User required parameters are empty");
+            }
             return new User(this);
         }
     }

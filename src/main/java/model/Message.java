@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Alexeev on 29.09.2016.
  */
@@ -9,6 +11,8 @@ public class Message {
     private final long idTo;
 
     private final String body;
+
+    private final Timestamp time;
 
     public long getIdFrom() {
         return idFrom;
@@ -22,30 +26,42 @@ public class Message {
         return body;
     }
 
-    public Message(MessageBuilder builder) {
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public Message(Builder builder) {
         idFrom = builder.idFrom;
         idTo = builder.idTo;
         body = builder.body;
+        time = builder.time;
     }
 
-    public static class MessageBuilder {
+    public static class Builder {
         private long idFrom;
         private long idTo;
 
         private String body;
 
-        public MessageBuilder setIdFrom(long idFrom) {
+        private Timestamp time;
+
+        public Builder setIdFrom(long idFrom) {
             this.idFrom = idFrom;
             return this;
         }
 
-        public MessageBuilder setIdTo(long idTo) {
+        public Builder setIdTo(long idTo) {
             this.idTo = idTo;
             return this;
         }
 
-        public MessageBuilder setBody(String body) {
+        public Builder setBody(String body) {
             this.body = body;
+            return this;
+        }
+
+        public Builder setTime(Timestamp time) {
+            this.time = time;
             return this;
         }
 

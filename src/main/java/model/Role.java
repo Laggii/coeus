@@ -22,29 +22,29 @@ public class Role {
         return description;
     }
 
-    private Role(RoleBuilder builder) {
+    private Role(Builder builder) {
         roleId = builder.roleId;
         name = builder.name;
         description = builder.description;
     }
 
-    public static class RoleBuilder {
+    public static class Builder {
         private int roleId;
 
         private String name;
         private String description;
 
-        public RoleBuilder setRoleId(int roleId) {
+        public Builder setRoleId(int roleId) {
             this.roleId = roleId;
             return this;
         }
 
-        public RoleBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public RoleBuilder setDescription(String description) {
+        public Builder setDescription(String description) {
             this.description = description;
             return this;
         }

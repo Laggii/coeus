@@ -29,14 +29,14 @@ public class Course {
         return description;
     }
 
-    public Course(CourseBuilder builder) {
+    public Course(Builder builder) {
         courseId = builder.courseId;
         name = builder.name;
         ownerId = builder.ownerId;
         description = builder.description;
     }
 
-    public static class CourseBuilder {
+    public static class Builder {
         private long courseId;
 
         private String name;
@@ -45,22 +45,22 @@ public class Course {
 
         private String description;
 
-        public CourseBuilder setCourseId(long courseId) {
+        public Builder setCourseId(long courseId) {
             this.courseId = courseId;
             return this;
         }
 
-        public CourseBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public CourseBuilder setOwnerId(long ownerId) {
+        public Builder setOwnerId(long ownerId) {
             this.ownerId = ownerId;
             return this;
         }
 
-        public CourseBuilder setDescription(String description) {
+        public Builder setDescription(String description) {
             this.description = description;
             return this;
         }

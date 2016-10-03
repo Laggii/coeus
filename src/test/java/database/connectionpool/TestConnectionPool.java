@@ -1,12 +1,14 @@
-package connectionpool;
+package database.connectionpool;
 
-import database.connectionpool.ConnectionPool;
 import exception.ConnectionPoolException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by Alexeev on 27.09.2016.
  */
+
 public class TestConnectionPool {
     ConnectionPool connectionPool;
     List<Connection> connections;
@@ -38,19 +41,11 @@ public class TestConnectionPool {
     @Test
     public void testTakeConnection() {
         try {
-            assertNotNull(connectionPool.takeConnection());
-        } catch (ConnectionPoolException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Test
-    public void testCloseConnection() {
-        try {
             Connection connection = connectionPool.takeConnection();
+            assertNotNull(connection);
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
+
             connectionPool.closeConnection(connection, statement, resultSet);
         } catch (ConnectionPoolException | SQLException e) {
             e.printStackTrace();
@@ -86,3 +81,4 @@ public class TestConnectionPool {
         assertEquals(0, connectionPool.getGivenAwayConQueueSize());
     }
 }
+
