@@ -54,14 +54,14 @@ public class ConnectionPool {
     }
 
     /**
-     * Close all connections in the pool
+     * Close connections and clear connection queues
      */
     public void disposePool() {
         clearConnectionQueue();
     }
 
     /**
-     * Close connections in Queues
+     * Clear connection Queues
      */
     private void clearConnectionQueue() {
         try {
@@ -183,7 +183,7 @@ public class ConnectionPool {
     }
 
     /**
-     * Close all connections in the specified queue
+     * Close and clear all connections in the specified queue
      *
      * @param queue of connections need to be closed
      * @throws SQLException

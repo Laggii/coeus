@@ -29,28 +29,31 @@ public class UserDaoImpl implements GenericDao<User> {
 
     private static final String CREATE_QUERY =
             "INSERT INTO users (email,hash,firstname,lastname,gender,birthdate,phone,role_id) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?)";
+                    "VALUES (?,?,?,?,?,?,?,?)";
 
     private static final String READ_QUERY =
-            "SELECT * FROM users WHERE ID = ?";
+            "SELECT * FROM users WHERE user_id = ?";
 
     private static final String UPDATE_QUERY =
-            "UPDATE users SET email = ?,hash = ?,gender = ?,birthdate = ?,phone = ?,role_id = ?" +
+            "UPDATE users SET email = ?,hash = ?,gender = ?,birthdate = ?,phone = ?,role_id = ? " +
                     "WHERE user_id = ?";
 
     private static final String DELETE_QUERY =
             "DELETE FROM users WHERE user_id = ?";
 
+    private static final String GET_ID_QUERY =
+            "SELECT user_id FROM users WHERE email = ?";
+
     private static final String GET_ALL_QUERY =
-            "SELECT * FROM user";
+            "SELECT * FROM users";
 
     public UserDaoImpl() throws ConnectionPoolException {
         this.connectionPool = ConnectionPool.getInstance();
-        this.connection = connectionPool.takeConnection();
     }
 
     @Override
-    public boolean create(final User user) throws SQLException {
+    public boolean create(final User user) throws SQLException, ConnectionPoolException {
+        connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(CREATE_QUERY);
 
         statement.setString(1, user.getEmail());
@@ -70,22 +73,29 @@ public class UserDaoImpl implements GenericDao<User> {
     }
 
     @Override
-    public User read(int id) throws SQLException {
+    public User read(long id) throws SQLException, ConnectionPoolException {
+        connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(READ_QUERY);
 
-        statement.setInt(1, id);
+        statement.setLong(1, id);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             User user = buildUser(resultSet);
-            logger.info("Successfully read User");
             connectionPool.closeConnection(connection, statement, resultSet);
+            logger.info("Successfully read User");
             return user;
         }
         return null;
     }
 
     @Override
-    public boolean update(final User user) throws SQLException {
+    public boolean update(final User user) throws SQLException, ConnectionPoolException {
+        long userId = user.getUserId();
+        if(userId == 0) {
+            userId = getId(user);
+        }
+
+        connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(UPDATE_QUERY);
 
         statement.setString(1, user.getEmail());
@@ -94,24 +104,52 @@ public class UserDaoImpl implements GenericDao<User> {
         statement.setDate(4, user.getBirthDate());
         statement.setString(5, user.getPhone());
         statement.setInt(6, user.getRoleId());
-        statement.setLong(7, user.getUserId());
+        statement.setLong(7, userId);
 
+        logger.info(statement.toString());
+
+        boolean result = statement.executeUpdate() > 0;
         connectionPool.closeConnection(connection, statement);
         logger.info("Successfully updated User");
-        return statement.executeUpdate() > 0;
+        return result;
     }
 
     @Override
-    public boolean delete(final User user) throws SQLException {
+    public boolean delete(final User user) throws SQLException, ConnectionPoolException {
+        long userId = user.getUserId();
+        if(userId == 0) {
+            userId = getId(user);
+        }
+
+        connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(DELETE_QUERY);
-        statement.setLong(1, user.getUserId());
+        statement.setLong(1, userId);
+
+        boolean result = statement.executeUpdate() > 0;
         connectionPool.closeConnection(connection, statement);
         logger.info("Successfully deleted User");
-        return statement.executeUpdate() > 0;
+        return result;
     }
 
     @Override
-    public Collection<User> getAll() throws SQLException {
+    public long getId(final User user) throws SQLException, ConnectionPoolException {
+        connection = connectionPool.takeConnection();
+        statement = connection.prepareStatement(GET_ID_QUERY);
+
+        statement.setString(1, user.getEmail());
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            long result = resultSet.getLong(1);
+            connectionPool.closeConnection(connection, statement, resultSet);
+            logger.info("Successfully got User id");
+            return result;
+        }
+        return 0;
+    }
+
+    @Override
+    public Collection<User> getAll() throws SQLException, ConnectionPoolException {
+        connection = connectionPool.takeConnection();
         Set<User> users = new HashSet<>();
         statement = connection.prepareStatement(GET_ALL_QUERY);
         ResultSet resultSet = statement.executeQuery();
@@ -133,7 +171,7 @@ public class UserDaoImpl implements GenericDao<User> {
      */
     private User buildUser(ResultSet resultSet) throws SQLException {
         return new User.Builder()
-                .setId(resultSet.getLong("user_id"))
+                .setUserId(resultSet.getLong("user_id"))
                 .setEmail(resultSet.getString("email"))
                 .setHash(resultSet.getString("hash"))
                 .setFirstName(resultSet.getString("firstname"))

@@ -1,7 +1,6 @@
 package database.connectionpool;
 
 import exception.ConnectionPoolException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,18 +32,18 @@ public class TestConnectionPool {
         connections = new ArrayList<>();
     }
 
-    @After
-    public void destroy() {
-        connectionPool.disposePool();
-    }
-
     @Test
     public void testTakeConnection() {
         try {
             Connection connection = connectionPool.takeConnection();
+
             assertNotNull(connection);
+
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            assertEquals(1, resultSet.getLong(1));
 
             connectionPool.closeConnection(connection, statement, resultSet);
         } catch (ConnectionPoolException | SQLException e) {

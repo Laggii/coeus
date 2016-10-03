@@ -2,13 +2,14 @@ package model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * Created by Alexeev on 29.09.2016.
  */
 public class User {
 
-    private final long userId;
+    private long userId;
 
     private String email;
     private String hash;
@@ -64,6 +65,10 @@ public class User {
 
     public Timestamp getRegDate() {
         return regDate;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public void setEmail(String email) {
@@ -124,7 +129,7 @@ public class User {
         public Builder() {
         }
 
-        public Builder setId(long userId) {
+        public Builder setUserId(long userId) {
             this.userId = userId;
             return this;
         }
@@ -175,7 +180,7 @@ public class User {
         }
 
         public User build() {
-            if (userId == 0 || email == null || hash == null || lastName == null || firstName == null ) {
+            if (email == null || hash == null || lastName == null || firstName == null ) {
                 throw new IllegalArgumentException("User required parameters are empty");
             }
             return new User(this);
