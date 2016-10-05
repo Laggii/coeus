@@ -4,6 +4,7 @@ import database.dao.jdbc.UserDaoImpl;
 import exception.ConnectionPoolException;
 import model.User;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,7 +55,7 @@ public class TestUserDaoImpl {
     @Test
     public void testCreate() {
         try {
-            assertEquals(true, userDao.create(testUser));
+            assertTrue(userDao.create(testUser));
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }
@@ -66,7 +67,14 @@ public class TestUserDaoImpl {
             userDao.create(testUser);
             long id = userDao.getId(testUser);
             User user = userDao.read(id);
+            assertEquals("test@example.com", user.getEmail());
+            assertEquals("hash", user.getHash());
             assertEquals("Ivan", user.getFirstName());
+            assertEquals("Ivanov", user.getLastName());
+            assertEquals('m', user.getGender());
+            assertEquals("1986-07-05", user.getBirthDate().toString());
+            assertEquals("88001234567", user.getPhone());
+            assertEquals(1, user.getRoleId());
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }
@@ -78,10 +86,19 @@ public class TestUserDaoImpl {
             userDao.create(testUser);
             testUser.setGender('f');
             testUser.setUserId(userDao.getId(testUser));
-            assertEquals(true, userDao.update(testUser));
+            assertTrue(userDao.update(testUser));
 
             User user = userDao.read(testUser.getUserId());
+            assertEquals("test@example.com", user.getEmail());
+            assertEquals("hash", user.getHash());
+            assertEquals("Ivan", user.getFirstName());
+            assertEquals("Ivanov", user.getLastName());
+
             assertEquals('f', user.getGender());
+
+            assertEquals("1986-07-05", user.getBirthDate().toString());
+            assertEquals("88001234567", user.getPhone());
+            assertEquals(1, user.getRoleId());
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }
@@ -91,7 +108,17 @@ public class TestUserDaoImpl {
     public void testDelete() {
         try {
             userDao.create(testUser);
-            assertEquals(true, userDao.delete(testUser));
+            assertTrue(userDao.delete(testUser));
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetId() {
+        try {
+            userDao.create(testUser);
+            assertTrue(userDao.getId(testUser) != 0);
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }
@@ -102,6 +129,8 @@ public class TestUserDaoImpl {
         try {
             Collection<User> users = userDao.getAll();
             assertTrue(users.size() >= 1);
+
+            users.forEach(Assert::assertNotNull);
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }

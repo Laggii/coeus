@@ -5,12 +5,12 @@ package model;
  */
 public class Role {
 
-    private final int roleId;
+    private long roleId;
 
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
 
-    public int getRoleId() {
+    public long getRoleId() {
         return roleId;
     }
 
@@ -22,6 +22,18 @@ public class Role {
         return description;
     }
 
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private Role(Builder builder) {
         roleId = builder.roleId;
         name = builder.name;
@@ -29,12 +41,12 @@ public class Role {
     }
 
     public static class Builder {
-        private int roleId;
+        private long roleId;
 
         private String name;
         private String description;
 
-        public Builder setRoleId(int roleId) {
+        public Builder setRoleId(long roleId) {
             this.roleId = roleId;
             return this;
         }
@@ -50,6 +62,9 @@ public class Role {
         }
 
         public Role build() {
+            if (name == null || description == null) {
+                throw new IllegalArgumentException("Role required parameters are empty");
+            }
             return new Role(this);
         }
     }

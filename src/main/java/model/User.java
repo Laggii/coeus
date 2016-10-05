@@ -126,9 +126,6 @@ public class User {
 
         private Timestamp regDate;
 
-        public Builder() {
-        }
-
         public Builder setUserId(long userId) {
             this.userId = userId;
             return this;

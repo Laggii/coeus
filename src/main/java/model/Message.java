@@ -7,12 +7,17 @@ import java.sql.Timestamp;
  */
 public class Message {
 
-    private final long idFrom;
-    private final long idTo;
+    private long messageId;
+    private long idFrom;
+    private long idTo;
 
-    private final String body;
+    private String body;
 
-    private final Timestamp time;
+    private Timestamp time;
+
+    public long getMessageId() {
+        return messageId;
+    }
 
     public long getIdFrom() {
         return idFrom;
@@ -30,7 +35,28 @@ public class Message {
         return time;
     }
 
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
+    }
+
+    public void setIdFrom(long idFrom) {
+        this.idFrom = idFrom;
+    }
+
+    public void setIdTo(long idTo) {
+        this.idTo = idTo;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
     public Message(Builder builder) {
+        messageId = builder.messageId;
         idFrom = builder.idFrom;
         idTo = builder.idTo;
         body = builder.body;
@@ -38,12 +64,18 @@ public class Message {
     }
 
     public static class Builder {
+        private long messageId;
         private long idFrom;
         private long idTo;
 
         private String body;
 
         private Timestamp time;
+
+        public Builder setMessageId(long messageId) {
+            this.messageId = messageId;
+            return this;
+        }
 
         public Builder setIdFrom(long idFrom) {
             this.idFrom = idFrom;
@@ -66,6 +98,9 @@ public class Message {
         }
 
         public Message build() {
+            if (body == null || time == null ) {
+                throw new IllegalArgumentException("Message required parameters are empty");
+            }
             return new Message(this);
         }
     }

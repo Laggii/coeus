@@ -1,17 +1,21 @@
 package model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Alexeev on 29.09.2016.
  */
 public class Course {
 
-    private final long courseId;
+    private long courseId;
 
-    private final String name;
+    private String name;
 
-    private final long ownerId;
+    private long ownerId;
 
-    private final String description;
+    private String description;
+
+    private final Timestamp dateCreated;
 
     public long getCourseId() {
         return courseId;
@@ -29,11 +33,28 @@ public class Course {
         return description;
     }
 
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Course(Builder builder) {
         courseId = builder.courseId;
         name = builder.name;
         ownerId = builder.ownerId;
         description = builder.description;
+        dateCreated = builder.dateCreated;
     }
 
     public static class Builder {
@@ -44,6 +65,8 @@ public class Course {
         private long ownerId;
 
         private String description;
+
+        private Timestamp dateCreated;
 
         public Builder setCourseId(long courseId) {
             this.courseId = courseId;
@@ -65,7 +88,15 @@ public class Course {
             return this;
         }
 
+        public Builder setDateCreated(Timestamp dateCreated) {
+            this.dateCreated = dateCreated;
+            return this;
+        }
+
         public Course build() {
+            if(name == null || description == null) {
+                throw new IllegalArgumentException("Course required parameters are empty");
+            }
             return new Course(this);
         }
     }

@@ -1,13 +1,18 @@
 package database.dao.interfaces;
 
 import exception.ConnectionPoolException;
-import model.User;
 
 import java.sql.SQLException;
 import java.util.Collection;
 
 /**
  * Created by Alexeev on 29.09.2016.
+ */
+
+/**
+ * Generic Dao interface with basic CRUD operations
+ *
+ * @param <T>
  */
 public interface GenericDao<T> {
     /**
@@ -57,5 +62,5 @@ public interface GenericDao<T> {
      *
      * @return collection of objects
      */
-    Collection<User> getAll() throws SQLException, ConnectionPoolException;
+    Collection<T> getAll() throws SQLException, ConnectionPoolException;
 }

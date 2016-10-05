@@ -85,13 +85,14 @@ public class UserDaoImpl implements GenericDao<User> {
             logger.info("Successfully read User");
             return user;
         }
+        connectionPool.closeConnection(connection, statement, resultSet);
         return null;
     }
 
     @Override
     public boolean update(final User user) throws SQLException, ConnectionPoolException {
         long userId = user.getUserId();
-        if(userId == 0) {
+        if (userId == 0) {
             userId = getId(user);
         }
 
@@ -106,8 +107,6 @@ public class UserDaoImpl implements GenericDao<User> {
         statement.setInt(6, user.getRoleId());
         statement.setLong(7, userId);
 
-        logger.info(statement.toString());
-
         boolean result = statement.executeUpdate() > 0;
         connectionPool.closeConnection(connection, statement);
         logger.info("Successfully updated User");
@@ -117,7 +116,7 @@ public class UserDaoImpl implements GenericDao<User> {
     @Override
     public boolean delete(final User user) throws SQLException, ConnectionPoolException {
         long userId = user.getUserId();
-        if(userId == 0) {
+        if (userId == 0) {
             userId = getId(user);
         }
 
@@ -144,6 +143,7 @@ public class UserDaoImpl implements GenericDao<User> {
             logger.info("Successfully got User id");
             return result;
         }
+        connectionPool.closeConnection(connection, statement, resultSet);
         return 0;
     }
 
