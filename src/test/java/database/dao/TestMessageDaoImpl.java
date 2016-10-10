@@ -61,7 +61,7 @@ public class TestMessageDaoImpl {
     public void testRead() {
         try {
             messageDao.create(testMessage);
-            long id = messageDao.getId(testMessage);
+            long id = messageDao.getId(testMessage.getBody());
             Message message = messageDao.read(id);
 
             assertEquals(1, message.getIdFrom());
@@ -76,7 +76,7 @@ public class TestMessageDaoImpl {
     public void testUpdate() {
         try {
             messageDao.create(testMessage);
-            testMessage.setMessageId(messageDao.getId(testMessage));
+            testMessage.setMessageId(messageDao.getId(testMessage.getBody()));
             testMessage.setBody("Welcome!");
             assertTrue(messageDao.update(testMessage));
 
@@ -103,7 +103,7 @@ public class TestMessageDaoImpl {
     public void testGetId() {
         try {
             messageDao.create(testMessage);
-            assertTrue(messageDao.getId(testMessage) != 0);
+            assertTrue(messageDao.getId(testMessage.getBody()) != 0);
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }

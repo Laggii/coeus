@@ -113,11 +113,11 @@ public class RoleDaoImpl implements GenericDao<Role> {
     }
 
     @Override
-    public long getId(final Role role) throws SQLException, ConnectionPoolException {
+    public long getId(final String name) throws SQLException, ConnectionPoolException {
         connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(GET_ID_QUERY);
 
-        statement.setString(1, role.getName());
+        statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             long result = resultSet.getLong(1);

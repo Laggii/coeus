@@ -48,13 +48,13 @@ public interface GenericDao<T> {
     boolean delete(final T object) throws SQLException, ConnectionPoolException;
 
     /**
-     * Get id of the object from database
+     * Get id of the object from database using it's field
      *
-     * @param object whose id you need to get
+     * @param field on of the object required fields (email, name, etc)
      * @return id of the object
      * @throws SQLException
      */
-    long getId(final T object) throws SQLException, ConnectionPoolException;
+    long getId(final String field) throws SQLException, ConnectionPoolException;
 
 
     /**

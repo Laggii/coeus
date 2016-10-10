@@ -59,7 +59,7 @@ public class TestCourseDaoImpl {
     public void testRead() {
         try {
             courseDao.create(testCourse);
-            long id = courseDao.getId(testCourse);
+            long id = courseDao.getId(testCourse.getName());
             Course course = courseDao.read(id);
 
             assertEquals("Test Course", course.getName());
@@ -74,7 +74,7 @@ public class TestCourseDaoImpl {
     public void testUpdate() {
         try {
             courseDao.create(testCourse);
-            testCourse.setCourseId(courseDao.getId(testCourse));
+            testCourse.setCourseId(courseDao.getId(testCourse.getName()));
             testCourse.setDescription("New Description");
             assertTrue(courseDao.update(testCourse));
 
@@ -101,7 +101,7 @@ public class TestCourseDaoImpl {
     public void testGetId() {
         try {
             courseDao.create(testCourse);
-            assertTrue(courseDao.getId(testCourse) != 0);
+            assertTrue(courseDao.getId(testCourse.getName()) != 0);
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }

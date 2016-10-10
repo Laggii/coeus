@@ -17,6 +17,7 @@ import java.util.Set;
 /**
  * Created by Alexeev on 04.10.2016.
  */
+//TODO: getting id using body is bad idea
 public class MessageDaoImpl implements GenericDao<Message> {
 
     private ConnectionPool connectionPool;
@@ -88,7 +89,7 @@ public class MessageDaoImpl implements GenericDao<Message> {
     public boolean update(final Message message) throws SQLException, ConnectionPoolException {
         long messageId = message.getMessageId();
         if (messageId == 0) {
-            messageId = getId(message);
+            messageId = getId(message.getBody());
         }
 
         connection = connectionPool.takeConnection();
@@ -109,7 +110,7 @@ public class MessageDaoImpl implements GenericDao<Message> {
     public boolean delete(final Message message) throws SQLException, ConnectionPoolException {
         long messageId = message.getMessageId();
         if (messageId == 0) {
-            messageId = getId(message);
+            messageId = getId(message.getBody());
         }
 
         connection = connectionPool.takeConnection();
@@ -123,11 +124,11 @@ public class MessageDaoImpl implements GenericDao<Message> {
     }
 
     @Override
-    public long getId(final Message message) throws SQLException, ConnectionPoolException {
+    public long getId(final String body) throws SQLException, ConnectionPoolException {
         connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(GET_ID_QUERY);
 
-        statement.setString(1, message.getBody());
+        statement.setString(1, body);
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
@@ -155,6 +156,13 @@ public class MessageDaoImpl implements GenericDao<Message> {
         return messages;
     }
 
+    /**
+     * Build message from ResultSet parameters
+     *
+     * @param resultSet
+     * @return Message
+     * @throws SQLException
+     */
     private Message buildMessage(ResultSet resultSet) throws SQLException {
         return new Message.Builder()
                 .setMessageId(resultSet.getLong("message_id"))

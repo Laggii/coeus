@@ -99,7 +99,7 @@ public class TestRoleDaoImpl {
     public void testGetId() {
         try {
             roleDao.create(testRole);
-            assertEquals(4, roleDao.getId(testRole));
+            assertEquals(4, roleDao.getId(testRole.getName()));
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }

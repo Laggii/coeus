@@ -34,6 +34,9 @@ public class UserDaoImpl implements GenericDao<User> {
     private static final String READ_QUERY =
             "SELECT * FROM users WHERE user_id = ?";
 
+    private static final String READ_BY_EMAIL_QUERY =
+            "SELECT * FROM users WHERE email = ?";
+
     private static final String UPDATE_QUERY =
             "UPDATE users SET email = ?,hash = ?,gender = ?,birthdate = ?,phone = ?,role_id = ? " +
                     "WHERE user_id = ?";
@@ -93,7 +96,7 @@ public class UserDaoImpl implements GenericDao<User> {
     public boolean update(final User user) throws SQLException, ConnectionPoolException {
         long userId = user.getUserId();
         if (userId == 0) {
-            userId = getId(user);
+            userId = getId(user.getEmail());
         }
 
         connection = connectionPool.takeConnection();
@@ -117,7 +120,7 @@ public class UserDaoImpl implements GenericDao<User> {
     public boolean delete(final User user) throws SQLException, ConnectionPoolException {
         long userId = user.getUserId();
         if (userId == 0) {
-            userId = getId(user);
+            userId = getId(user.getEmail());
         }
 
         connection = connectionPool.takeConnection();
@@ -131,11 +134,11 @@ public class UserDaoImpl implements GenericDao<User> {
     }
 
     @Override
-    public long getId(final User user) throws SQLException, ConnectionPoolException {
+    public long getId(String email) throws SQLException, ConnectionPoolException {
         connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(GET_ID_QUERY);
 
-        statement.setString(1, user.getEmail());
+        statement.setString(1, email);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             long result = resultSet.getLong(1);
@@ -160,6 +163,49 @@ public class UserDaoImpl implements GenericDao<User> {
         connectionPool.closeConnection(connection, statement);
         logger.info("Successfully got all Users");
         return users;
+    }
+
+    //TODO: test me, javadoc
+
+    /**
+     * Get user from database using provided email
+     *
+     * @param email
+     * @return User
+     * @throws SQLException
+     * @throws ConnectionPoolException
+     */
+    public User read(String email) throws SQLException, ConnectionPoolException {
+        connection = connectionPool.takeConnection();
+        statement = connection.prepareStatement(READ_BY_EMAIL_QUERY);
+
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            User user = buildUser(resultSet);
+            connectionPool.closeConnection(connection, statement, resultSet);
+            logger.info("Successfully read User");
+            return user;
+        }
+        connectionPool.closeConnection(connection, statement, resultSet);
+        return null;
+    }
+
+    //TODO: test me, javadoc
+
+    /**
+     * Check if user exists using his email address
+     *
+     * @param user
+     * @return true if exists
+     * @throws SQLException
+     * @throws ConnectionPoolException
+     */
+    public boolean isExists(final User user) throws SQLException, ConnectionPoolException {
+        if (getId(user.getEmail()) == 0) {
+            return false;
+        }
+        return true;
     }
 
     /**

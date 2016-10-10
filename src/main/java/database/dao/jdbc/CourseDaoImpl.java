@@ -87,7 +87,7 @@ public class CourseDaoImpl implements GenericDao<Course> {
     public boolean update(final Course course) throws SQLException, ConnectionPoolException {
         long courseId = course.getCourseId();
         if (courseId == 0) {
-            courseId = getId(course);
+            courseId = getId(course.getName());
         }
 
         connection = connectionPool.takeConnection();
@@ -108,7 +108,7 @@ public class CourseDaoImpl implements GenericDao<Course> {
     public boolean delete(final Course course) throws SQLException, ConnectionPoolException {
         long courseId = course.getCourseId();
         if (courseId == 0) {
-            courseId = getId(course);
+            courseId = getId(course.getName());
         }
 
         connection = connectionPool.takeConnection();
@@ -122,11 +122,11 @@ public class CourseDaoImpl implements GenericDao<Course> {
     }
 
     @Override
-    public long getId(final Course course) throws SQLException, ConnectionPoolException {
+    public long getId(final String name) throws SQLException, ConnectionPoolException {
         connection = connectionPool.takeConnection();
         statement = connection.prepareStatement(GET_ID_QUERY);
 
-        statement.setString(1, course.getName());
+        statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
@@ -154,6 +154,13 @@ public class CourseDaoImpl implements GenericDao<Course> {
         return courses;
     }
 
+    /**
+     * Build course from ResultSet parameters
+     *
+     * @param resultSet
+     * @return Course
+     * @throws SQLException
+     */
     private Course buildCourse(ResultSet resultSet) throws SQLException {
         return new Course.Builder()
                 .setCourseId(resultSet.getLong("course_id"))

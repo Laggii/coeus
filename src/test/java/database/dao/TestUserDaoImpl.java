@@ -65,7 +65,7 @@ public class TestUserDaoImpl {
     public void testRead() {
         try {
             userDao.create(testUser);
-            long id = userDao.getId(testUser);
+            long id = userDao.getId(testUser.getEmail());
             User user = userDao.read(id);
             assertEquals("test@example.com", user.getEmail());
             assertEquals("hash", user.getHash());
@@ -85,7 +85,7 @@ public class TestUserDaoImpl {
         try {
             userDao.create(testUser);
             testUser.setGender('f');
-            testUser.setUserId(userDao.getId(testUser));
+            testUser.setUserId(userDao.getId(testUser.getEmail()));
             assertTrue(userDao.update(testUser));
 
             User user = userDao.read(testUser.getUserId());
@@ -118,7 +118,7 @@ public class TestUserDaoImpl {
     public void testGetId() {
         try {
             userDao.create(testUser);
-            assertTrue(userDao.getId(testUser) != 0);
+            assertTrue(userDao.getId(testUser.getEmail()) != 0);
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }
@@ -131,6 +131,36 @@ public class TestUserDaoImpl {
             assertTrue(users.size() >= 1);
 
             users.forEach(Assert::assertNotNull);
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testReadByEmail() {
+        try {
+            userDao.create(testUser);
+            User user = userDao.read("test@example.com");
+
+            assertEquals("test@example.com", user.getEmail());
+            assertEquals("hash", user.getHash());
+            assertEquals("Ivan", user.getFirstName());
+            assertEquals("Ivanov", user.getLastName());
+            assertEquals('m', user.getGender());
+            assertEquals("1986-07-05", user.getBirthDate().toString());
+            assertEquals("88001234567", user.getPhone());
+            assertEquals(1, user.getRoleId());
+
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testIsExists() {
+        try {
+            userDao.create(testUser);
+            assertTrue(userDao.isExists(testUser));
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
         }
