@@ -21,7 +21,8 @@ import java.util.Arrays;
 @WebFilter("/*")
 public class LoginFilter implements Filter {
 
-    private static final String[] ALLOWED_PATHS = {"/login", "/registration", "/css", "/fonts", "/icons", "/js"};
+    private static final String[] ALLOWED_PATHS = {"/login", "/registration", "/error", "/locale",
+            "/css", "/fonts", "/js"};
 
     private static final Logger logger = Logger.getLogger(LoginFilter.class);
 

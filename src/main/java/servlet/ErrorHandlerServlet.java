@@ -1,6 +1,7 @@
 package servlet;
 
 import org.apache.log4j.Logger;
+import service.ErrorCode;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static service.ErrorCode.*;
+
 /**
  * Created by Alexeev on 10.10.2016.
  */
@@ -16,6 +19,7 @@ import java.io.IOException;
 /**
  * ErrorHandler handles all web application exceptions and errors
  * Redirects user to the valid error page explaining the error
+ * TODO: possible abuse
  */
 @WebServlet("/error")
 public class ErrorHandlerServlet extends HttpServlet {
@@ -40,7 +44,7 @@ public class ErrorHandlerServlet extends HttpServlet {
                 request.getAttribute("javax.servlet.error.servlet_name");
         String requestUri = (String)
                 request.getAttribute("javax.servlet.error.request_uri");
-        String errorMsg = "";
+        ErrorCode errorCode;
 
         if (servletName == null) {
             servletName = "Unknown";
@@ -52,26 +56,25 @@ public class ErrorHandlerServlet extends HttpServlet {
             statusCode = 0;
         }
 
-        //TODO: translation
         switch (statusCode) {
-            case 404:
-                errorMsg = "Page not found";
-                break;
             case 403:
-                errorMsg = "Access Denied";
+                errorCode = STATUS_403_ERROR;
+                break;
+            case 404:
+                errorCode = STATUS_404_ERROR;
                 break;
             case 500:
-                errorMsg = "Internal Server Error";
+                errorCode = STATUS_500_ERROR;
                 break;
             default:
-                errorMsg = "An error has occured.";
+                errorCode = STATUS_UNKNOWN_ERROR;
                 break;
         }
 
-        logger.error(String.format("Error/Exception information: {Servlet Name: %s, Status code: %d, Request URI: %s",
+        logger.error(String.format("ErrorCode/Exception information: {Servlet Name: %s, Status code: %d, Request URI: %s",
                 servletName, statusCode, requestUri), throwable);
 
-        request.setAttribute("errorMsg", errorMsg);
+        request.setAttribute("errorMsg", errorCode);
         request.setAttribute("statusCode", statusCode);
         request.getRequestDispatcher("/WEB-INF/error/errorpage.jsp").forward(request, response);
     }

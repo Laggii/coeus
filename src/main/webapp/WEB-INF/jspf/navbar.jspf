@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<c:set var="lang" value="${not empty language ? language : 'en'}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="localization.locale" />
 <!-- Static navbar -->
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -17,13 +21,26 @@
                 <li><a href="#">Contact</a></li>
                 <li><a href="./profile">Profile</a></li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown-toggle">
+                    <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <fmt:message key="other.label.lang" /> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="./locale?lang=en">English</a></li>
+                        <li><a href="./locale?lang=ru">Русский</a></li>
+                    </ul>
+                </li>
                 <c:if test="${sessionScope.user != null}">
                     <!-- TODO: modal -->
-                    <a class="btn btn-default navbar-btn" role="button" href="./logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    <a class="btn btn-default navbar-btn" role="button" href="./logout"><span
+                            class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </c:if>
                 <c:if test="${sessionScope.user == null}">
-                    <a class="btn btn-default navbar-btn" role="button" href="./login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a class="btn btn-default navbar-btn" role="button" href="./login"><span
+                            class="glyphicon glyphicon-log-in"></span> Login</a>
                 </c:if>
             </ul>
         </div>

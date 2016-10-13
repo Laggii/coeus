@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="${lang}">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,12 +16,12 @@
 </head>
 <body>
 <div class="container">
-    <!-- Navbar-->
+    <!-- Navbar -->
     <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
 
     <!-- Login and Registration Panel -->
     <div class="login-panel panel panel-default">
-        <div class="panel-heading">Welcome to Coeus</div>
+        <div class="panel-heading"><fmt:message key="login.label.welcome"/></div>
         <div class="panel-body">
 
             <ul class="nav nav-tabs">
@@ -112,6 +112,7 @@
                                 <input type="checkbox" name="teacher">I am a teacher
                             </label>
                         </div>
+                        <input type="hidden" id="isRegister" value="<c:out value="${isRegister}"/>" >
                         <button class="btn btn-sm btn-success" type="submit">Register</button>
                     </form>
                 </div>
@@ -128,12 +129,11 @@
 
     </div>
 
-    <hr>
-
     <!-- Footer -->
     <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/login.js"></script>
 </body>
 </html>

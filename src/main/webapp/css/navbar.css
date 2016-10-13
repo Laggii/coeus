@@ -6,3 +6,7 @@ body {
 .navbar {
     margin-bottom: 20px;
 }
+
+.dropdown-toggle {
+    margin-right: 5px;
+}

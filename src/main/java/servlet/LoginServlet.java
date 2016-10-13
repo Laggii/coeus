@@ -5,6 +5,7 @@ import exception.ConnectionPoolException;
 import model.User;
 import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
+import service.ErrorCode;
 import service.FormValidator;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static service.ErrorCode.*;
 /**
  * Created by Alexeev on 29.09.2016.
  */
@@ -29,10 +31,6 @@ public class LoginServlet extends HttpServlet {
     private UserDaoImpl userDao;
 
     private final static Logger logger = Logger.getLogger(LoginServlet.class);
-
-    //TODO: move and translate
-    private static final String USER_INCORRECT_ERROR = "Provided email and password pair does not match any user";
-    private static final String DATABASE_ERROR = "Database connection problems, please try again later";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,8 +58,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //Validate form parameters
-        String validationResult = FormValidator.validateLogin(email, password);
-        if (!validationResult.isEmpty()) {
+        ErrorCode validationResult = FormValidator.validateLogin(email, password);
+        if (validationResult != VALID) {
             printError(validationResult, request, response);
             return;
         }
@@ -72,7 +70,9 @@ public class LoginServlet extends HttpServlet {
             User user = userDao.read(email);
             if (user != null && checkPassword(password, user.getHash())) {
                 session.setAttribute("user", user);
+
                 logger.info("User logged in: {" + user.getEmail() + "," + user.getFirstName() + "," + user.getLastName() + "}");
+
                 request.getRequestDispatcher("/main").forward(request, response);
             } else {
                 printError(USER_INCORRECT_ERROR, request, response);
@@ -86,14 +86,14 @@ public class LoginServlet extends HttpServlet {
     /**
      * Print error message to the user
      *
-     * @param errorMessage
+     * @param errorCode
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    private void printError(String errorMessage, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("errorMsg", errorMessage);
+    private void printError(ErrorCode errorCode, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("errorMsg", errorCode);
         request.setAttribute("email", request.getParameter("email"));
 
         request.getRequestDispatcher("/login.jsp").forward(request, response);

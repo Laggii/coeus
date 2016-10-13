@@ -5,6 +5,7 @@ import exception.ConnectionPoolException;
 import model.User;
 import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
+import service.ErrorCode;
 import service.FormValidator;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Enumeration;
+
+import static service.ErrorCode.*;
 
 /**
  * Created by Alexeev on 05.10.2016.
@@ -31,10 +34,6 @@ public class RegistrationServlet extends HttpServlet {
     private UserDaoImpl userDao;
 
     private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
-
-    //TODO: move and translate
-    private static final String USER_EXISTS_ERROR = "User already exists";
-    private static final String DATABASE_ERROR = "Database connection problems, please try again later";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,8 +66,8 @@ public class RegistrationServlet extends HttpServlet {
         int roleId;
 
         //Validate form parameters
-        String validationResult = FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword);
-        if (!validationResult.isEmpty()) {
+        ErrorCode validationResult = FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword);
+        if (validationResult != VALID) {
             printError(validationResult, request, response);
             return;
         }
@@ -100,8 +99,10 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-    private void printError(String errorMessage, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("errorMsg", errorMessage);
+    private void printError(ErrorCode errorCode, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("errorMsg", errorCode);
+        //marker for js to open register tab
+        request.setAttribute("isRegister", "true");
 
         //Save form parameters
         Enumeration params = request.getParameterNames();

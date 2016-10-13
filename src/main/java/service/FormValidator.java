@@ -2,6 +2,8 @@ package service;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import static service.ErrorCode.*;
+
 /**
  * Created by Alexeev on 05.10.2016.
  */
@@ -13,13 +15,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class FormValidator {
 
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
-
-    //TODO: move and translate (enum maybe?)
-    private static final String EMAIL_INVALID_ERROR = "You must provide a valid email";
-    private static final String FIRSTNAME_INVALID_ERROR = "You must provide a valid first name 35 characters long. Only Unicode characters are allowed";
-    private static final String LASTNAME_INVALID_ERROR = "You must provide a valid last name 35 characters long. Only Unicode characters are allowed";
-    private static final String PASSWORD_INVALID_ERROR = "Password length should be from 6 to 40 characters";
-    private static final String REPEAT_PASSWORD_INVALID_ERROR = "Passwords do not match";
 
     /**
      * Validate email string using Apache Commons EmailValidator
@@ -56,16 +51,16 @@ public class FormValidator {
      *
      * @param email
      * @param password
-     * @return empty error code if valid
+     * @return valid code if valid
      */
-    public static String validateLogin(String email, String password) {
+    public static ErrorCode validateLogin(String email, String password) {
         if (!validateEmail(email)) {
             return EMAIL_INVALID_ERROR;
         }
         if (!validatePassword(password)) {
             return PASSWORD_INVALID_ERROR;
         }
-        return "";
+        return VALID;
     }
 
     /**
@@ -76,11 +71,11 @@ public class FormValidator {
      * @param lastName
      * @param password
      * @param repeatPassword
-     * @return empty error code if valid
+     * @return valid error code if valid
      */
-    public static String validateRegistration(String email, String firstName, String lastName, String password, String repeatPassword) {
-        String loginResult = validateLogin(email, password);
-        if (!loginResult.isEmpty()) {
+    public static ErrorCode validateRegistration(String email, String firstName, String lastName, String password, String repeatPassword) {
+        ErrorCode loginResult = validateLogin(email, password);
+        if (loginResult != VALID) {
             return loginResult;
         }
 
@@ -100,6 +95,6 @@ public class FormValidator {
             return REPEAT_PASSWORD_INVALID_ERROR;
         }
 
-        return "";
+        return VALID;
     }
 }
