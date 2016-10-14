@@ -1,0 +1,30 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<div class="col-md-3">
+    <!-- user info -->
+    <div class="text-center">
+        <img class="avatar img-circle img-thumbnail"
+             src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjA1IiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDIwNSAxODAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MTgwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTU3YzJmOGJmOGQgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNTdjMmY4YmY4ZCI+PHJlY3Qgd2lkdGg9IjIwNSIgaGVpZ2h0PSIxODAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI3OCIgeT0iOTQuNSI+MjA1eDE4MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg=="
+             style="width: 150px;height:150px;">
+        <h5><p>${user.firstName} ${user.lastName}</p>
+            <p>${user.email}</p>
+            <c:choose>
+                <c:when test="${user.roleId==1}">Student</c:when>
+                <c:when test="${user.roleId==2}">Teacher</c:when>
+                <c:when test="${user.roleId==3}">Admin</c:when>
+                <c:otherwise>User</c:otherwise>
+            </c:choose>
+        </h5>
+    </div>
+
+    <!-- user menu -->
+    <div class="list-group">
+        <a href="#" class="list-group-item">Profile</a>
+        <a href="#" class="list-group-item">Courses</a>
+        <a href="#" class="list-group-item">Messages</a>
+        <a href="#" class="list-group-item">Friends</a>
+        <a href="#" class="list-group-item">Users</a>
+        <a href="#" class="list-group-item">Settings</a>
+    </div>
+</div>

@@ -18,7 +18,6 @@
     <!-- Navbar-->
     <%@ include file="/WEB-INF/jspf/navbar.jspf" %>
 
-    <hr>
 
     <!-- Footer -->
     <%@ include file="/WEB-INF/jspf/footer.jspf" %>
