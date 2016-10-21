@@ -191,8 +191,6 @@ public class UserDaoImpl implements GenericDao<User> {
         return null;
     }
 
-    //TODO: test me, javadoc
-
     /**
      * Check if user exists using his email address
      *
@@ -215,7 +213,7 @@ public class UserDaoImpl implements GenericDao<User> {
      * @return User
      * @throws SQLException
      */
-    private User buildUser(ResultSet resultSet) throws SQLException {
+    public User buildUser(ResultSet resultSet) throws SQLException {
         return new User.Builder()
                 .setUserId(resultSet.getLong("user_id"))
                 .setEmail(resultSet.getString("email"))

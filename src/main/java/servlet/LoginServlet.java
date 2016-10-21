@@ -6,7 +6,7 @@ import model.User;
 import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import service.ErrorCode;
-import service.FormValidator;
+import service.InputValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //Validate form parameters
-        ErrorCode validationResult = FormValidator.validateLogin(email, password);
+        ErrorCode validationResult = InputValidator.validateLogin(email, password);
         if (validationResult != VALID) {
             printError(validationResult, request, response);
             return;
@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 
                 logger.info("User logged in: {" + user.getEmail() + "," + user.getFirstName() + "," + user.getLastName() + "}");
 
-                request.getRequestDispatcher("/main").forward(request, response);
+                response.sendRedirect("./main");
             } else {
                 printError(USER_INCORRECT_ERROR, request, response);
             }

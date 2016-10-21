@@ -11,7 +11,7 @@ public class Course {
 
     private String name;
 
-    private long ownerId;
+    private User owner;
 
     private String description;
 
@@ -25,8 +25,8 @@ public class Course {
         return name;
     }
 
-    public long getOwnerId() {
-        return ownerId;
+    public User getOwner() {
+        return owner;
     }
 
     public String getDescription() {
@@ -41,8 +41,8 @@ public class Course {
         this.name = name;
     }
 
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public void setDescription(String description) {
@@ -52,7 +52,7 @@ public class Course {
     public Course(Builder builder) {
         courseId = builder.courseId;
         name = builder.name;
-        ownerId = builder.ownerId;
+        owner = builder.owner;
         description = builder.description;
         dateCreated = builder.dateCreated;
     }
@@ -62,7 +62,7 @@ public class Course {
 
         private String name;
 
-        private long ownerId;
+        private User owner;
 
         private String description;
 
@@ -78,8 +78,8 @@ public class Course {
             return this;
         }
 
-        public Builder setOwnerId(long ownerId) {
-            this.ownerId = ownerId;
+        public Builder setOwner(User owner) {
+            this.owner = owner;
             return this;
         }
 

@@ -9,10 +9,10 @@ import static service.ErrorCode.*;
  */
 
 /**
- * FormValidator provides functionality for testing form input such as email, phone, name, etc
+ * InputValidator provides functionality for testing user input such as email, phone, name, etc
  * Returns error code reason if validation fails
  */
-public class FormValidator {
+public class InputValidator {
 
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
 
@@ -44,6 +44,16 @@ public class FormValidator {
      */
     public static boolean validatePassword(String password) {
         return password != null && !password.isEmpty() && password.length() <= 40 && password.length() >= 6;
+    }
+
+    /**
+     * Validate id from request parameters
+     *
+     * @param id
+     * @return true if id is valid
+     */
+    public static boolean validateId(String id) {
+        return id != null && !id.isEmpty() && id.matches("^[0-9]+$");//TODO test me
     }
 
     /**

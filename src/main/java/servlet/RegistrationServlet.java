@@ -6,7 +6,7 @@ import model.User;
 import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import service.ErrorCode;
-import service.FormValidator;
+import service.InputValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,7 +66,7 @@ public class RegistrationServlet extends HttpServlet {
         int roleId;
 
         //Validate form parameters
-        ErrorCode validationResult = FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword);
+        ErrorCode validationResult = InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword);
         if (validationResult != VALID) {
             printError(validationResult, request, response);
             return;
@@ -89,9 +89,11 @@ public class RegistrationServlet extends HttpServlet {
                 printError(USER_EXISTS_ERROR, request, response);
             } else {
                 userDao.create(user);
+                user.setUserId(userDao.getId(email));
+
                 session.setAttribute("user", user);
                 logger.info("Successfully registered new user: {" + user.getEmail() + "," + user.getFirstName() + "," + user.getLastName() + "}");
-                request.getRequestDispatcher("/main").forward(request, response);
+                response.sendRedirect("./main");
             }
         } catch (SQLException | ConnectionPoolException e) {
             logger.error("Database error: " + e);
@@ -101,7 +103,7 @@ public class RegistrationServlet extends HttpServlet {
 
     private void printError(ErrorCode errorCode, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("errorMsg", errorCode);
-        //marker for js to open register tab
+        //marker to open registration tab
         request.setAttribute("isRegister", "true");
 
         //Save form parameters
@@ -109,7 +111,10 @@ public class RegistrationServlet extends HttpServlet {
         String param;
         while (params.hasMoreElements()) {
             param = (String) params.nextElement();
-            request.setAttribute(param, request.getParameter(param));
+            //do not save token
+            if (!"token".equals(param)) {
+                request.setAttribute(param, request.getParameter(param));
+            }
         }
 
         request.getRequestDispatcher("/login.jsp").forward(request, response);

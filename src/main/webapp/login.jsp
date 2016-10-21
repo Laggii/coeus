@@ -25,13 +25,15 @@
         <div class="panel-body">
 
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#login" data-toggle="tab">Sign in</a></li>
-                <li><a href="#register" data-toggle="tab">Registration</a></li>
+                <li <c:if test="${isRegister != 'true'}"> class="active"</c:if>>
+                    <a href="#login" data-toggle="tab">Sign in</a></li>
+                <li <c:if test="${isRegister == 'true'}"> class="active"</c:if>>
+                    <a href="#register" data-toggle="tab">Registration</a></li>
             </ul>
 
             <!-- Login tab -->
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="login">
+                <div class="tab-pane fade in <c:if test="${isRegister != 'true'}">active</c:if>" id="login">
                     <form role="form" method="POST" action="./login">
                         <!-- TODO: change field length (maxlength= "") -->
                         </br>
@@ -53,12 +55,13 @@
                                        type="password" required>
                             </div>
                         </div>
+                        <input type="hidden" name="token" value="${token}">
                         <button class="btn btn-sm btn-success" type="submit">Login</button>
                     </form>
                 </div>
 
                 <!-- Registration tab -->
-                <div class="tab-pane fade" id="register">
+                <div class="tab-pane fade in <c:if test="${isRegister == 'true'}">active</c:if>" id="register">
                     <form role="form" method="POST" action="./registration">
                         </br>
                         <div class="form-group">
@@ -112,7 +115,7 @@
                                 <input type="checkbox" name="teacher">I am a teacher
                             </label>
                         </div>
-                        <input type="hidden" id="isRegister" value="<c:out value="${isRegister}"/>" >
+                        <input type="hidden" name="token" value="${token}">
                         <button class="btn btn-sm btn-success" type="submit">Register</button>
                     </form>
                 </div>
@@ -134,6 +137,5 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/login.js"></script>
 </body>
 </html>

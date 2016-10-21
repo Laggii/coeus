@@ -20,6 +20,8 @@ public enum ErrorCode {
     STATUS_404_ERROR("error.servlet.404"),
     STATUS_500_ERROR("error.servlet.500"),
     STATUS_UNKNOWN_ERROR("error.servlet.default"),
+    USER_NOT_FOUND_ERROR("error.command.user_not_found"),
+    USER_ID_ERROR("error.command.user_id_incorrect"),
     VALID("error.validator.valid");
 
     private LocaleManager localeManager = LocaleManager.getInstance();

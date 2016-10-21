@@ -1,8 +1,10 @@
 package database.dao;
 
 import database.dao.jdbc.CourseDaoImpl;
+import database.dao.jdbc.UserDaoImpl;
 import exception.ConnectionPoolException;
 import model.Course;
+import model.User;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,20 +21,27 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestCourseDaoImpl {
     CourseDaoImpl courseDao;
+    UserDaoImpl userDao;
 
     Course testCourse;
+    User owner;
 
     @Before
     public void init() {
         try {
             courseDao = new CourseDaoImpl();
-        } catch (ConnectionPoolException e) {
+            userDao = new UserDaoImpl();
+
+            //I don't want to repeat process of creating new User in database, so I will get one from DB
+            owner = userDao.read(3);
+        } catch (ConnectionPoolException | SQLException e) {
             e.printStackTrace();
         }
 
+
         testCourse = new Course.Builder()
                 .setName("Test Course")
-                .setOwnerId(2)
+                .setOwner(owner)
                 .setDescription("Basic course for testing purposes")
                 .build();
     }
@@ -63,7 +72,7 @@ public class TestCourseDaoImpl {
             Course course = courseDao.read(id);
 
             assertEquals("Test Course", course.getName());
-            assertEquals(2, course.getOwnerId());
+            assertEquals(3, course.getOwner().getUserId());
             assertEquals("Basic course for testing purposes", course.getDescription());
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();
@@ -80,7 +89,7 @@ public class TestCourseDaoImpl {
 
             Course course = courseDao.read(testCourse.getCourseId());
             assertEquals("Test Course", course.getName());
-            assertEquals(2, course.getOwnerId());
+            assertEquals(3, course.getOwner().getUserId());
             assertEquals("New Description", course.getDescription());
         } catch (SQLException | ConnectionPoolException e) {
             e.printStackTrace();

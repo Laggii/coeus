@@ -8,11 +8,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import static service.ErrorCode.*;
+
 
 /**
  * Created by Alexeev on 09.10.2016.
  */
-public class TestFormValidator {
+public class TestInputValidator {
     private static final String[] CORRECT_EMAILS = {
             "email@example.com",
             "firstname.lastname@example.com",
@@ -74,58 +76,66 @@ public class TestFormValidator {
 
     @Test
     public void testValidateEmail() {
-        Arrays.stream(CORRECT_EMAILS).forEach(email -> assertTrue(FormValidator.validateEmail(email)));
-        Arrays.stream(INCORRECT_EMAILS).forEach(email -> assertFalse(FormValidator.validateEmail(email)));
+        Arrays.stream(CORRECT_EMAILS).forEach(email -> assertTrue(InputValidator.validateEmail(email)));
+        Arrays.stream(INCORRECT_EMAILS).forEach(email -> assertFalse(InputValidator.validateEmail(email)));
     }
 
     @Test
     public void testValidateName() {
-        Arrays.stream(CORRECT_NAMES).forEach(name -> assertTrue(FormValidator.validateName(name)));
-        Arrays.stream(INCORRECT_NAMES).forEach(name -> assertFalse(FormValidator.validateName(name)));
+        Arrays.stream(CORRECT_NAMES).forEach(name -> assertTrue(InputValidator.validateName(name)));
+        Arrays.stream(INCORRECT_NAMES).forEach(name -> assertFalse(InputValidator.validateName(name)));
     }
 
     @Test
     public void testValidatePassword() {
-        assertTrue(FormValidator.validatePassword("q1w2e3r4t5y6"));
-        assertFalse(FormValidator.validatePassword(""));
-        assertFalse(FormValidator.validatePassword(null));
+        assertTrue(InputValidator.validatePassword("q1w2e3r4t5y6"));
+        assertFalse(InputValidator.validatePassword(""));
+        assertFalse(InputValidator.validatePassword(null));
     }
 
     @Test
-    //TODO: if translated, dont forget to change reference here too
+    public void testValidateId() {
+        assertTrue(InputValidator.validateId("1"));
+        assertTrue(InputValidator.validateId("100"));
+        assertFalse(InputValidator.validateId("1'"));
+        assertFalse(InputValidator.validateId("'1"));
+        assertFalse(InputValidator.validateId("=1;"));
+        assertFalse(InputValidator.validateId(""));
+    }
+
+    @Test
     public void testValidateRegistration() {
         String email = "example@example.com";
         String firstName = "John";
         String lastName = "Doe";
         String password = "unhashedpass";
         String repeatPassword = "unhashedpass";
-        assertEquals("", FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
+        assertEquals(VALID, InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
 
         email = "@";
-        assertEquals("You must provide a valid email",
-                FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
+        assertEquals(EMAIL_INVALID_ERROR,
+                InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
 
         email = "example@example.com";
         repeatPassword = "anotherpassword";
-        assertEquals("Passwords do not match",
-                FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
+        assertEquals(REPEAT_PASSWORD_INVALID_ERROR,
+                InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
 
         repeatPassword = "unhashedpass";
         firstName = "John'";
-        assertEquals("You must provide a valid first name 35 characters long. Only Unicode characters are allowed",
-                FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
+        assertEquals(FIRSTNAME_INVALID_ERROR,
+                InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
 
         firstName = "John";
         lastName = ";Doe";
-        assertEquals("You must provide a valid last name 35 characters long. Only Unicode characters are allowed",
-                FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
+        assertEquals(LASTNAME_INVALID_ERROR,
+                InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
 
         lastName = "Doe";
         password = "short";
         repeatPassword = "short";
-        assertEquals("Password length should be from 6 to 40 characters",
-                FormValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
+        assertEquals(PASSWORD_INVALID_ERROR,
+                InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword));
     }
-
 
 }

@@ -4,6 +4,7 @@ import database.connectionpool.ConnectionPool;
 import database.dao.interfaces.GenericDao;
 import exception.ConnectionPoolException;
 import model.Course;
+import model.User;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -25,13 +26,15 @@ public class CourseDaoImpl implements GenericDao<Course> {
 
     private PreparedStatement statement;
 
+    private UserDaoImpl userDao;
+
     private static final Logger logger = Logger.getLogger(CourseDaoImpl.class);
 
     private static final String CREATE_QUERY =
             "INSERT INTO courses (name,owner_id,description) VALUES (?,?,?)";
 
     private static final String READ_QUERY =
-            "SELECT * FROM courses WHERE course_id = ?";
+            "SELECT * FROM courses JOIN users ON courses.owner_id = users.user_id WHERE course_id = ?";
 
     private static final String UPDATE_QUERY =
             "UPDATE courses SET name = ?,owner_id = ?,description = ?  " +
@@ -44,7 +47,7 @@ public class CourseDaoImpl implements GenericDao<Course> {
             "SELECT course_id FROM courses WHERE name = ?";
 
     private static final String GET_ALL_QUERY =
-            "SELECT * FROM courses";
+            "SELECT * FROM courses JOIN users ON courses.owner_id = users.user_id;";
 
     public CourseDaoImpl() throws ConnectionPoolException {
         this.connectionPool = ConnectionPool.getInstance();
@@ -56,7 +59,7 @@ public class CourseDaoImpl implements GenericDao<Course> {
         statement = connection.prepareStatement(CREATE_QUERY);
 
         statement.setString(1, course.getName());
-        statement.setLong(2, course.getOwnerId());
+        statement.setLong(2, course.getOwner().getUserId());
         statement.setString(3, course.getDescription());
         statement.execute();
 
@@ -94,7 +97,7 @@ public class CourseDaoImpl implements GenericDao<Course> {
         statement = connection.prepareStatement(UPDATE_QUERY);
 
         statement.setString(1, course.getName());
-        statement.setLong(2, course.getOwnerId());
+        statement.setLong(2, course.getOwner().getUserId());
         statement.setString(3, course.getDescription());
         statement.setLong(4, courseId);
 
@@ -161,11 +164,13 @@ public class CourseDaoImpl implements GenericDao<Course> {
      * @return Course
      * @throws SQLException
      */
-    private Course buildCourse(ResultSet resultSet) throws SQLException {
+    public Course buildCourse(ResultSet resultSet) throws SQLException, ConnectionPoolException {
+        userDao = new UserDaoImpl();
+        User owner = userDao.buildUser(resultSet);
         return new Course.Builder()
                 .setCourseId(resultSet.getLong("course_id"))
                 .setName(resultSet.getString("name"))
-                .setOwnerId(resultSet.getLong("owner_id"))
+                .setOwner(owner)
                 .setDescription(resultSet.getString("description"))
                 .setDateCreated(resultSet.getTimestamp("date_created"))
                 .build();
