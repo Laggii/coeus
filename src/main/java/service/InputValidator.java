@@ -1,8 +1,9 @@
 package service;
 
+import org.apache.commons.validator.routines.DateValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 
-import static service.ErrorCode.*;
+import static service.MessageProvider.*;
 
 /**
  * Created by Alexeev on 05.10.2016.
@@ -15,6 +16,11 @@ import static service.ErrorCode.*;
 public class InputValidator {
 
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
+    private static final DateValidator dateValidator = DateValidator.getInstance();
+
+    private static final String NAME_REGEX = "^\\pL*";
+    private static final String ID_REGEX = "^[0-9]+$";
+    private static final String PHONE_REGEX = "\\+\\d\\s\\(\\d{3}\\)\\s\\d{3}-\\d{2}-\\d{2}";
 
     /**
      * Validate email string using Apache Commons EmailValidator
@@ -33,7 +39,7 @@ public class InputValidator {
      * @return true if name is valid
      */
     public static boolean validateName(String name) {
-        return name != null && !name.isEmpty() && name.length() <= 35 && name.matches("^\\pL*");
+        return name != null && !name.isEmpty() && name.length() <= 35 && name.matches(NAME_REGEX);
     }
 
     /**
@@ -47,13 +53,43 @@ public class InputValidator {
     }
 
     /**
-     * Validate id from request parameters
+     * Validate id
      *
      * @param id
      * @return true if id is valid
      */
     public static boolean validateId(String id) {
-        return id != null && !id.isEmpty() && id.matches("^[0-9]+$");//TODO test me
+        return id != null && !id.isEmpty() && id.matches(ID_REGEX);
+    }
+
+    /**
+     * Validate user sex
+     *
+     * @param sex
+     * @return true if sex is valid
+     */
+    public static boolean validateSex(String sex) {
+        return (sex != null && !sex.isEmpty() && sex.length() == 1) && (sex.equals("m") || sex.equals("f"));
+    }
+
+    /**
+     * Validate user phone
+     *
+     * @param phone
+     * @return true if phone is valid
+     */
+    public static boolean validatePhone(String phone) {
+        return phone != null && !phone.isEmpty() && phone.length() == 18 && phone.matches(PHONE_REGEX);
+    }
+
+    /**
+     * Validate user birth date using Apache Common DateValidator
+     *
+     * @param birthDate
+     * @return true if birth date is valid
+     */
+    public static boolean validateBirthDate(String birthDate) {
+        return dateValidator.isValid(birthDate);
     }
 
     /**
@@ -61,9 +97,9 @@ public class InputValidator {
      *
      * @param email
      * @param password
-     * @return valid code if valid
+     * @return valid information code if valid
      */
-    public static ErrorCode validateLogin(String email, String password) {
+    public static MessageProvider validateLogin(String email, String password) {
         if (!validateEmail(email)) {
             return EMAIL_INVALID_ERROR;
         }
@@ -81,10 +117,10 @@ public class InputValidator {
      * @param lastName
      * @param password
      * @param repeatPassword
-     * @return valid error code if valid
+     * @return valid information code if valid
      */
-    public static ErrorCode validateRegistration(String email, String firstName, String lastName, String password, String repeatPassword) {
-        ErrorCode loginResult = validateLogin(email, password);
+    public static MessageProvider validateRegistration(String email, String firstName, String lastName, String password, String repeatPassword) {
+        MessageProvider loginResult = validateLogin(email, password);
         if (loginResult != VALID) {
             return loginResult;
         }
@@ -103,6 +139,65 @@ public class InputValidator {
 
         if (!repeatPassword.equals(password)) {
             return REPEAT_PASSWORD_INVALID_ERROR;
+        }
+
+        return VALID;
+    }
+
+    /**
+     * Validate change password form
+     *
+     * @param oldPassword
+     * @param newPassword
+     * @param repeatPassword
+     * @return valid information code if valid
+     */
+    public static MessageProvider validatePasswordChange(String oldPassword, String newPassword, String repeatPassword) {
+        if (!validatePassword(oldPassword) || !validatePassword(newPassword) || !validatePassword(repeatPassword)) {
+            return PASSWORD_INVALID_ERROR;
+        }
+
+        if (!repeatPassword.equals(newPassword)) {
+            return REPEAT_PASSWORD_INVALID_ERROR;
+        }
+
+        return VALID;
+    }
+
+    /**
+     * Validate profile settings form
+     *
+     * @param email
+     * @param firstName
+     * @param lastName
+     * @param sex
+     * @param phone
+     * @param birthDate
+     * @return valid information code if valid
+     */
+    public static MessageProvider validateProfileChange(String email, String firstName, String lastName, String sex, String phone, String birthDate) {
+        if (!validateEmail(email)) {
+            return EMAIL_INVALID_ERROR;
+        }
+
+        if (!validateName(firstName)) {
+            return FIRSTNAME_INVALID_ERROR;
+        }
+
+        if (!validateName(lastName)) {
+            return LASTNAME_INVALID_ERROR;
+        }
+
+        if (!validateSex(sex)) {
+            return SEX_INVALID_ERROR;
+        }
+
+        if (!validatePhone(phone)) {
+            return PHONE_INVALID_ERROR;
+        }
+
+        if (!validateBirthDate(birthDate)) {
+            return BIRTHDATE_INVALID_ERROR;
         }
 
         return VALID;

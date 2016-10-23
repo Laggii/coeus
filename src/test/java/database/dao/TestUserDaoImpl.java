@@ -1,7 +1,7 @@
 package database.dao;
 
-import database.dao.jdbc.UserDaoImpl;
-import exception.ConnectionPoolException;
+import database.dao.mysql.UserDaoImpl;
+import exception.DaoException;
 import model.User;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -19,15 +18,15 @@ import static org.junit.Assert.assertTrue;
  * Created by Alexeev on 03.10.2016.
  */
 public class TestUserDaoImpl {
-    UserDaoImpl userDao;
+    private UserDaoImpl userDao;
 
-    User testUser;
+    private User testUser;
 
     @Before
     public void init() {
         try {
             userDao = new UserDaoImpl();
-        } catch (ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
 
@@ -38,7 +37,7 @@ public class TestUserDaoImpl {
                 .setLastName("Ivanov")
                 .setGender('m')
                 .setBirthDate(Date.valueOf("1986-07-05"))
-                .setPhone("88001234567")
+                .setPhone("+8 (800) 123-45-67")
                 .setRoleId(1)
                 .build();
     }
@@ -47,7 +46,7 @@ public class TestUserDaoImpl {
     public void cleanUp() {
         try {
             userDao.delete(testUser);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -56,7 +55,7 @@ public class TestUserDaoImpl {
     public void testCreate() {
         try {
             assertTrue(userDao.create(testUser));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -73,9 +72,9 @@ public class TestUserDaoImpl {
             assertEquals("Ivanov", user.getLastName());
             assertEquals('m', user.getGender());
             assertEquals("1986-07-05", user.getBirthDate().toString());
-            assertEquals("88001234567", user.getPhone());
+            assertEquals("+8 (800) 123-45-67", user.getPhone());
             assertEquals(1, user.getRoleId());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -97,9 +96,9 @@ public class TestUserDaoImpl {
             assertEquals('f', user.getGender());
 
             assertEquals("1986-07-05", user.getBirthDate().toString());
-            assertEquals("88001234567", user.getPhone());
+            assertEquals("+8 (800) 123-45-67", user.getPhone());
             assertEquals(1, user.getRoleId());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -109,7 +108,7 @@ public class TestUserDaoImpl {
         try {
             userDao.create(testUser);
             assertTrue(userDao.delete(testUser));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -119,7 +118,7 @@ public class TestUserDaoImpl {
         try {
             userDao.create(testUser);
             assertTrue(userDao.getId(testUser.getEmail()) != 0);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -131,7 +130,7 @@ public class TestUserDaoImpl {
             assertTrue(users.size() >= 1);
 
             users.forEach(Assert::assertNotNull);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -148,10 +147,10 @@ public class TestUserDaoImpl {
             assertEquals("Ivanov", user.getLastName());
             assertEquals('m', user.getGender());
             assertEquals("1986-07-05", user.getBirthDate().toString());
-            assertEquals("88001234567", user.getPhone());
+            assertEquals("+8 (800) 123-45-67", user.getPhone());
             assertEquals(1, user.getRoleId());
 
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -161,7 +160,7 @@ public class TestUserDaoImpl {
         try {
             userDao.create(testUser);
             assertTrue(userDao.isExists(testUser));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }

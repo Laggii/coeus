@@ -35,14 +35,13 @@
             <div class="tab-content">
                 <div class="tab-pane fade in <c:if test="${isRegister != 'true'}">active</c:if>" id="login">
                     <form role="form" method="POST" action="./login">
-                        <!-- TODO: change field length (maxlength= "") -->
                         </br>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-envelope"></i>
                                 </span>
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" required
+                                <input class="form-control" placeholder="E-mail" name="email" maxlength="254" type="email" required
                                        value="<c:out value="${email}"/>" autofocus>
                             </div>
                         </div>
@@ -69,7 +68,7 @@
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-envelope"></i>
                                 </span>
-                                <input class="form-control" placeholder="E-mail" name="email" type="email"
+                                <input class="form-control" placeholder="E-mail" name="email" maxlength="254" type="email"
                                        value="<c:out value="${email}"/>" required autofocus>
                             </div>
                         </div>
@@ -135,7 +134,7 @@
     <!-- Footer -->
     <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

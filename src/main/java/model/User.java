@@ -14,8 +14,8 @@ public class User {
     private String email;
     private String hash;
 
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
 
     private char gender;
 
@@ -77,6 +77,14 @@ public class User {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setGender(char gender) {

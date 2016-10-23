@@ -30,6 +30,10 @@
         </taglib>
     </jsp-config>
 
+    <session-config>
+        <session-timeout>300</session-timeout>
+    </session-config>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

@@ -17,12 +17,12 @@ public class CommandFactory {
 
     public Command getCommand(String name) throws CommandException {
         if (name != null) {
-            for (CommandEnum commandEnum : CommandEnum.values()) {
-                if (name.equalsIgnoreCase(commandEnum.getName())) {
-                    return commandEnum.getCommand();
+            for (CommandProvider commandProvider : CommandProvider.values()) {
+                if (name.equalsIgnoreCase(commandProvider.getName())) {
+                    return commandProvider.getCommand();
                 }
             }
         }
-        throw new CommandException("Command not found");
+        throw new CommandException("Command not found: " + name);
     }
 }

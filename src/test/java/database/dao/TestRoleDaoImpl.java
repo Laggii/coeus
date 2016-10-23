@@ -1,14 +1,13 @@
 package database.dao;
 
-import database.dao.jdbc.RoleDaoImpl;
-import exception.ConnectionPoolException;
+import database.dao.mysql.RoleDaoImpl;
+import exception.DaoException;
 import model.Role;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -18,18 +17,17 @@ import static org.junit.Assert.assertTrue;
  * Created by Alexeev on 03.10.2016.
  */
 public class TestRoleDaoImpl {
-    RoleDaoImpl roleDao;
+    private RoleDaoImpl roleDao;
 
-    Role testRole;
+    private Role testRole;
 
     @Before
     public void init() {
         try {
             roleDao = new RoleDaoImpl();
-        } catch (ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
-
         testRole = new Role.Builder()
                 .setRoleId(4)
                 .setName("TestRole")
@@ -41,7 +39,7 @@ public class TestRoleDaoImpl {
     public void cleanUp() {
         try {
             roleDao.delete(testRole);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -50,7 +48,7 @@ public class TestRoleDaoImpl {
     public void testCreate() {
         try {
             assertTrue(roleDao.create(testRole));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -63,7 +61,7 @@ public class TestRoleDaoImpl {
             assertEquals(4, role.getRoleId());
             assertEquals("TestRole", role.getName());
             assertEquals("Role for testing purposes", role.getDescription());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -80,7 +78,7 @@ public class TestRoleDaoImpl {
             assertEquals(4, role.getRoleId());
             assertEquals("TestRole", role.getName());
             assertEquals("Testing description", role.getDescription());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -90,7 +88,7 @@ public class TestRoleDaoImpl {
         try {
             roleDao.create(testRole);
             assertTrue(roleDao.delete(testRole));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -100,7 +98,7 @@ public class TestRoleDaoImpl {
         try {
             roleDao.create(testRole);
             assertEquals(4, roleDao.getId(testRole.getName()));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -112,7 +110,7 @@ public class TestRoleDaoImpl {
             assertTrue(roles.size() >= 1);
 
             roles.forEach(Assert::assertNotNull);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }

@@ -23,7 +23,6 @@ public class UserTableTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         try {
-            long userId = user.getUserId();
             String userRole;
 
             switch (user.getRoleId()) {
@@ -41,14 +40,13 @@ public class UserTableTag extends TagSupport {
             }
 
             pageContext.getOut().write(String.format("                    <tr>\n" +
-                            "                        <td>%d</td>\n" +
                             "                        <td>%s</td>\n" +
                             "                        <td>%s</td>\n" +
                             "                        <td>%s</td>\n" +
                             "                        <td>%s</td>\n" +
                             "                        <td><a href=\"./main?action=profile&id=%d\">View Profile</a></td>\n" +
                             "                    </tr>",
-                    userId, user.getEmail(), user.getFirstName(), user.getLastName(), userRole, userId));
+                    user.getEmail(), user.getFirstName(), user.getLastName(), userRole, user.getUserId()));
         } catch (IOException e) {
             e.printStackTrace();
         }

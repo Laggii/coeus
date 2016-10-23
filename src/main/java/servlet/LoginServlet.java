@@ -1,11 +1,10 @@
 package servlet;
 
-import database.dao.jdbc.UserDaoImpl;
-import exception.ConnectionPoolException;
+import database.dao.mysql.UserDaoImpl;
+import exception.DaoException;
 import model.User;
 import org.apache.log4j.Logger;
-import org.mindrot.jbcrypt.BCrypt;
-import service.ErrorCode;
+import service.MessageProvider;
 import service.InputValidator;
 
 import javax.servlet.ServletException;
@@ -15,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
-import static service.ErrorCode.*;
+import static service.MessageProvider.*;
+import static utils.Encryption.checkPassword;
 /**
  * Created by Alexeev on 29.09.2016.
  */
@@ -28,7 +27,6 @@ import static service.ErrorCode.*;
  */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private UserDaoImpl userDao;
 
     private final static Logger logger = Logger.getLogger(LoginServlet.class);
 
@@ -37,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         //Secure login page from logged users
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect("./main");
+            response.sendRedirect("./main?action=profile");
             return;
         }
 
@@ -50,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 
         //Secure login page from logged users
         if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect("./main");
+            response.sendRedirect("./main?action=profile");
             return;
         }
 
@@ -58,7 +56,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //Validate form parameters
-        ErrorCode validationResult = InputValidator.validateLogin(email, password);
+        MessageProvider validationResult = InputValidator.validateLogin(email, password);
         if (validationResult != VALID) {
             printError(validationResult, request, response);
             return;
@@ -66,18 +64,18 @@ public class LoginServlet extends HttpServlet {
 
         //Check if user exists and his password is correct
         try {
-            userDao = new UserDaoImpl();
+            UserDaoImpl userDao = new UserDaoImpl();
             User user = userDao.read(email);
             if (user != null && checkPassword(password, user.getHash())) {
                 session.setAttribute("user", user);
 
                 logger.info("User logged in: {" + user.getEmail() + "," + user.getFirstName() + "," + user.getLastName() + "}");
 
-                response.sendRedirect("./main");
+                response.sendRedirect("./main?action=profile");
             } else {
                 printError(USER_INCORRECT_ERROR, request, response);
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             logger.error("Database error: " + e);
             printError(DATABASE_ERROR, request, response);
         }
@@ -86,27 +84,16 @@ public class LoginServlet extends HttpServlet {
     /**
      * Print error message to the user
      *
-     * @param errorCode
+     * @param errorMsg
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    private void printError(ErrorCode errorCode, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("errorMsg", errorCode);
+    private void printError(MessageProvider errorMsg, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("errorMsg", errorMsg);
         request.setAttribute("email", request.getParameter("email"));
 
         request.getRequestDispatcher("/login.jsp").forward(request, response);
-    }
-
-    /**
-     * Check that plaintext password matches provided hash
-     *
-     * @param password
-     * @param hash
-     * @return true if matches
-     */
-    private boolean checkPassword(String password, String hash) {
-        return BCrypt.checkpw(password, hash);
     }
 }

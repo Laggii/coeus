@@ -23,16 +23,14 @@ public class CourseTableTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         try {
-            long courseId = course.getCourseId();
             pageContext.getOut().write(String.format("                    <tr>\n" +
-                            "                        <td>%d</td>\n" +
                             "                        <td>%s</td>\n" +
                             "                        <td>%s</td>\n" +
                             "                        <td><a href=\"./main?action=profile&id=%d\">%s %s</a></td>\n" +
                             "                        <td><a href=\"./main?action=course&id=%d\">View Course</a></td>\n" +
                             "                    </tr>",
-                    courseId, course.getName(), course.getDescription(), course.getOwner().getUserId(), course.getOwner().getFirstName(),
-                    course.getOwner().getLastName(), courseId));
+                    course.getName(), course.getDescription(), course.getOwner().getUserId(), course.getOwner().getFirstName(),
+                    course.getOwner().getLastName(), course.getCourseId()));
         } catch (IOException e) {
             e.printStackTrace();
         }

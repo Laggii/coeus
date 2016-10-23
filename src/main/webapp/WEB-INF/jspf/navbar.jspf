@@ -18,14 +18,14 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="./">Home</a></li>
-                <li><a href="./main">Profile</a></li>
+                <li><a href="./main?action=profile">Profile</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown-toggle">
                     <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                        <fmt:message key="other.label.lang" /> <span class="caret"></span>
+                        <fmt:message key="navbar.label.lang" /> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a href="./locale?lang=en">English</a></li>

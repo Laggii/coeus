@@ -21,10 +21,10 @@
 
     <!-- user menu -->
     <div class="list-group">
-        <a href="./main?action=profile&id=${user.userId}" class="list-group-item">Profile</a>
+        <a href="./main?action=profile" class="list-group-item">Profile</a>
         <a href="./main?action=courses" class="list-group-item">Courses</a>
         <a href="#" class="list-group-item">Messages</a>
-        <a href="#" class="list-group-item">Friends</a>
+        <a href="./main?action=friends" class="list-group-item">Friends</a>
         <a href="./main?action=users" class="list-group-item">Users</a>
         <a href="./main?action=settings" class="list-group-item">Settings</a>
     </div>

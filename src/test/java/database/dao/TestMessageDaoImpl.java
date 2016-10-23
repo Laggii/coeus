@@ -1,14 +1,13 @@
 package database.dao;
 
-import database.dao.jdbc.MessageDaoImpl;
-import exception.ConnectionPoolException;
+import database.dao.mysql.MessageDaoImpl;
+import exception.DaoException;
 import model.Message;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -19,15 +18,15 @@ import static org.junit.Assert.assertTrue;
  * Created by Alexeev on 04.10.2016.
  */
 public class TestMessageDaoImpl {
-    MessageDaoImpl messageDao;
+    private MessageDaoImpl messageDao;
 
-    Message testMessage;
+    private Message testMessage;
 
     @Before
     public void init() {
         try {
             messageDao = new MessageDaoImpl();
-        } catch (ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
 
@@ -43,7 +42,7 @@ public class TestMessageDaoImpl {
     public void cleanUp() {
         try {
             messageDao.delete(testMessage);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -52,7 +51,7 @@ public class TestMessageDaoImpl {
     public void testCreate() {
         try {
             assertTrue(messageDao.create(testMessage));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -67,7 +66,7 @@ public class TestMessageDaoImpl {
             assertEquals(1, message.getIdFrom());
             assertEquals(2, message.getIdTo());
             assertEquals("Hello!", message.getBody());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +83,7 @@ public class TestMessageDaoImpl {
             assertEquals(1, message.getIdFrom());
             assertEquals(2, message.getIdTo());
             assertEquals("Welcome!", message.getBody());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -94,7 +93,7 @@ public class TestMessageDaoImpl {
         try {
             messageDao.create(testMessage);
             assertTrue(messageDao.delete(testMessage));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -104,7 +103,7 @@ public class TestMessageDaoImpl {
         try {
             messageDao.create(testMessage);
             assertTrue(messageDao.getId(testMessage.getBody()) != 0);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -116,7 +115,7 @@ public class TestMessageDaoImpl {
             assertTrue(messages.size() >= 1);
 
             messages.forEach(Assert::assertNotNull);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }

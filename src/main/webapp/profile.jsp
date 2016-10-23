@@ -1,19 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="userProfile" value="${not empty requestScope.userProfile ? requestScope.userProfile : sessionScope.user}"
-       scope="page"/>
+<%@ taglib uri="http://coeus.com/jsp/tags/customtags" prefix="customtags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="${language}">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Coeus - Profile page</title>
-    <!-- navbar / footer css should be be included here -->
+    <title>Coeus - Profile</title>
+
     <link href="css/navbar.css" rel="stylesheet">
     <link href="css/footer.css" rel="stylesheet">
+    <link href="css/table.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-formhelpers.min.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -58,7 +60,8 @@
                                 <br>
                                 Date of Birth: <fmt:formatDate value="${userProfile.birthDate}"/>
                                 <br>
-                                Phone: ${userProfile.phone}
+                                Phone: <span class="bfh-phone" data-format="+d (ddd) ddd-dd-dd"
+                                             data-number="${userProfile.phone}"></span>
                                 <br>
                                 Registration date: <fmt:formatDate value="${userProfile.regDate}"/>
                                 <br>
@@ -74,27 +77,72 @@
                                  style="width: 150px;height:150px;">
                         </div>
                     </div>
-                    <br>
-                    User Friends Table
-                    <br>
-                    User Courses Table
                 </div>
             </div>
 
+            <!-- user courses -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Admin Panel(hide)</h3>
+                    <h3 class="panel-title">User courses</h3>
                 </div>
-                <div class="panel-body">
-                    Delete user, change user info
+                <c:if test="${! (empty requestScope.userCourses)}">
+                    <table id="courses" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="userCourse" items="${requestScope.userCourses}">
+                            <customtags:printCourse course="${userCourse}"/>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+            </div>
+
+            <!-- user friends -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User friends</h3>
                 </div>
+                <c:if test="${! (empty requestScope.userFriends)}">
+                    <table id="friends" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="friend" items="${requestScope.userFriends}">
+                            <customtags:printUser user="${friend}"/>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
             </div>
         </div>
-        <!-- Footer -->
-        <%@ include file="/WEB-INF/jspf/footer.jspf" %>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- Footer -->
+    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-formhelpers.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#courses').DataTable();
+        $('#friends').DataTable();
+    });
+</script>
 </body>
 </html>

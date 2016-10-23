@@ -1,37 +1,38 @@
 package command.user;
 
 import command.Command;
-import database.dao.jdbc.CourseDaoImpl;
-import exception.CommandException;
-import exception.ConnectionPoolException;
+import database.dao.mysql.CourseDaoImpl;
+import database.dao.mysql.UserDaoImpl;
+import exception.DaoException;
 import model.Course;
+import model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by Alexeev on 17.10.2016.
  */
+
+/**
+ * ViewCourses command processes user request to see all courses information
+ */
 public class ViewCourses extends Command {
 
-    CourseDaoImpl courseDao;
-
-    Collection<Course> courses;
-    Collection<Course> userCourses;
-
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        try {
-            courseDao = new CourseDaoImpl();
-            courses = courseDao.getAll();
-            request.setAttribute("courses", courses);
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
+        HttpSession session = request.getSession();
 
-            return "/courses.jsp";
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new CommandException(e);
-        }
+        CourseDaoImpl courseDao = new CourseDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
+
+        Collection<Course> courses = courseDao.getAll();
+        request.setAttribute("courses", courses);
+
+        Collection<Course> userCourses = userDao.getCourses((User) session.getAttribute("user"));
+        request.setAttribute("userCourses", userCourses);
+        return "/courses.jsp";
     }
 }

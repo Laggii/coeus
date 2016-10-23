@@ -1,8 +1,8 @@
 package database.dao;
 
-import database.dao.jdbc.CourseDaoImpl;
-import database.dao.jdbc.UserDaoImpl;
-import exception.ConnectionPoolException;
+import database.dao.mysql.CourseDaoImpl;
+import database.dao.mysql.UserDaoImpl;
+import exception.DaoException;
 import model.Course;
 import model.User;
 import org.junit.After;
@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -20,11 +19,13 @@ import static org.junit.Assert.assertTrue;
  * Created by Alexeev on 04.10.2016.
  */
 public class TestCourseDaoImpl {
-    CourseDaoImpl courseDao;
-    UserDaoImpl userDao;
+    private CourseDaoImpl courseDao;
 
-    Course testCourse;
-    User owner;
+    private UserDaoImpl userDao;
+
+    private Course testCourse;
+
+    private User owner;
 
     @Before
     public void init() {
@@ -34,7 +35,7 @@ public class TestCourseDaoImpl {
 
             //I don't want to repeat process of creating new User in database, so I will get one from DB
             owner = userDao.read(3);
-        } catch (ConnectionPoolException | SQLException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
 
@@ -50,7 +51,7 @@ public class TestCourseDaoImpl {
     public void cleanUp() {
         try {
             courseDao.delete(testCourse);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -59,7 +60,7 @@ public class TestCourseDaoImpl {
     public void testCreate() {
         try {
             assertTrue(courseDao.create(testCourse));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -74,7 +75,7 @@ public class TestCourseDaoImpl {
             assertEquals("Test Course", course.getName());
             assertEquals(3, course.getOwner().getUserId());
             assertEquals("Basic course for testing purposes", course.getDescription());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -91,7 +92,7 @@ public class TestCourseDaoImpl {
             assertEquals("Test Course", course.getName());
             assertEquals(3, course.getOwner().getUserId());
             assertEquals("New Description", course.getDescription());
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -101,7 +102,7 @@ public class TestCourseDaoImpl {
         try {
             courseDao.create(testCourse);
             assertTrue(courseDao.delete(testCourse));
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -111,7 +112,7 @@ public class TestCourseDaoImpl {
         try {
             courseDao.create(testCourse);
             assertTrue(courseDao.getId(testCourse.getName()) != 0);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }
@@ -123,7 +124,7 @@ public class TestCourseDaoImpl {
             assertTrue(courses.size() >= 1);
 
             courses.forEach(Assert::assertNotNull);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             e.printStackTrace();
         }
     }

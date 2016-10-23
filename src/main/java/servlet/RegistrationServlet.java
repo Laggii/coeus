@@ -1,11 +1,10 @@
 package servlet;
 
-import database.dao.jdbc.UserDaoImpl;
-import exception.ConnectionPoolException;
+import database.dao.mysql.UserDaoImpl;
+import exception.DaoException;
 import model.User;
 import org.apache.log4j.Logger;
-import org.mindrot.jbcrypt.BCrypt;
-import service.ErrorCode;
+import service.MessageProvider;
 import service.InputValidator;
 
 import javax.servlet.ServletException;
@@ -15,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Enumeration;
 
-import static service.ErrorCode.*;
+import static service.MessageProvider.*;
+import static utils.Encryption.encryptPassword;
 
 /**
  * Created by Alexeev on 05.10.2016.
@@ -31,8 +30,6 @@ import static service.ErrorCode.*;
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
-    private UserDaoImpl userDao;
-
     private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
 
     @Override
@@ -40,7 +37,7 @@ public class RegistrationServlet extends HttpServlet {
         //Secure registration page from logged users
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect("./main");
+            response.sendRedirect("./main?action=profile");
             return;
         }
 
@@ -53,7 +50,7 @@ public class RegistrationServlet extends HttpServlet {
 
         //Secure registration page from logged users
         if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect("./main");
+            response.sendRedirect("./main?action=profile");
             return;
         }
 
@@ -66,7 +63,7 @@ public class RegistrationServlet extends HttpServlet {
         int roleId;
 
         //Validate form parameters
-        ErrorCode validationResult = InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword);
+        MessageProvider validationResult = InputValidator.validateRegistration(email, firstName, lastName, password, repeatPassword);
         if (validationResult != VALID) {
             printError(validationResult, request, response);
             return;
@@ -84,7 +81,7 @@ public class RegistrationServlet extends HttpServlet {
 
         //Register user if he doesn't exist in database
         try {
-            userDao = new UserDaoImpl();
+            UserDaoImpl userDao = new UserDaoImpl();
             if (userDao.isExists(user)) {
                 printError(USER_EXISTS_ERROR, request, response);
             } else {
@@ -93,16 +90,16 @@ public class RegistrationServlet extends HttpServlet {
 
                 session.setAttribute("user", user);
                 logger.info("Successfully registered new user: {" + user.getEmail() + "," + user.getFirstName() + "," + user.getLastName() + "}");
-                response.sendRedirect("./main");
+                response.sendRedirect("./main?action=profile");
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (DaoException e) {
             logger.error("Database error: " + e);
             printError(DATABASE_ERROR, request, response);
         }
     }
 
-    private void printError(ErrorCode errorCode, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("errorMsg", errorCode);
+    private void printError(MessageProvider errorMsg, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("errorMsg", errorMsg);
         //marker to open registration tab
         request.setAttribute("isRegister", "true");
 
@@ -118,15 +115,5 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("/login.jsp").forward(request, response);
-    }
-
-    /**
-     * Encrypt password with salt
-     *
-     * @param password
-     * @return hash
-     */
-    private String encryptPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }
