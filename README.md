@@ -33,6 +33,7 @@ Since my project is related to study, students and teachers, I use this naming.
 - Localization (ru/eng)
 - Full User input validation
 - Error Handler (any application exceptions or http errors)
+- CSRF protection (token)
 
 ## Cons
 - Messages are not implemented yet
