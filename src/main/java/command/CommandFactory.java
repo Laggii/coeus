@@ -8,6 +8,7 @@ import exception.CommandException;
 
 /**
  * CommandFactory provides suitable Command object based on user "action" request parameter
+ * FactoryMethod pattern
  */
 public class CommandFactory {
     private static CommandFactory ourInstance = new CommandFactory();
