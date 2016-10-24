@@ -1,14 +1,15 @@
 # Coeus - educational social network for students and teachers
 
 Why "Coeus" ?
-Coeus /ˈsiːəs/ was a Titan god of intelligence and farsight, meaning that, due to his inquisitive mind and desire to learn, he was with gained knowledge and understanding able to see beyond the obvious.
 
-He was also identified as a god of wisdom and heavenly oracles.
+> Coeus /ˈsiːəs/ was a Titan god of intelligence and farsight, meaning that, due to his inquisitive mind and desire to learn, he was with gained knowledge and understanding able to see beyond the obvious.
+
+> He was also identified as a god of wisdom and heavenly oracles.
 
 Since my project is related to study, students and teachers, I use this naming.
 
 
-###### Technologies:
+## Technologies:
 - JSP, Servlets, JDBC
 - Bootstrap for UI and quick start(1) (and a few plugins: DataTables(2), BootstrapFormHelper)
 - jBCrypt for password hashing(3) (BCrypt implementation on Java)
@@ -17,14 +18,14 @@ Since my project is related to study, students and teachers, I use this naming.
 - Log4j for logging
 - Gradle
 
-###### Patterns:
+## Patterns:
 - MVC
 - DAO and Connection Pool
 - Builder ("must have" in model)
 - FrontController (only for /main servlet)
 - Strategy and FactoryMethod (4)
 
-###### Features
+## Features
 - Homegrown Login and Registration with password encryption
 - Homegrown Roles system (Student/Teacher/Admin)
 - User profiles and Friends
@@ -33,12 +34,12 @@ Since my project is related to study, students and teachers, I use this naming.
 - Full User input validation
 - Error Handler (any application exceptions or http errors)
 
-###### Cons
+## Cons
 - Messages are not implemented yet
 - getAll() methods return full collections from database (no pagination, see notes) (6)
-- I query the database the whole time and best choice is to use caching
+- I query the database the whole time and the best choice is to use caching
 
-###### Notes
+## Notes
 - (1) Well, it wasn't really a quick start, I spent hours to get elements working and looking good.
 - (2) DataTables is an amazing, really amazing jQuery plugin with Bootstrap support. Provides new functionality for tables
 - (3) All I know it's not md5 (which is old and bad) and passwords are encrypted with salt.
