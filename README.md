@@ -11,6 +11,7 @@ Since my project is related to study, students and teachers, I use this naming.
 
 ## Technologies:
 - JSP, Servlets, JDBC
+- Custom JSTL tags
 - Bootstrap for UI and quick start(1) (and a few plugins: DataTables(2), BootstrapFormHelper)
 - jBCrypt for password hashing(3) (BCrypt implementation on Java)
 - Tomcat as web server and servlet container
