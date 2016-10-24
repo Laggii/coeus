@@ -27,8 +27,12 @@ public enum MessageProvider {
     STATUS_UNKNOWN_ERROR("servlet.error.default"),
     USER_NOT_FOUND_ERROR("command.error.user_not_found"),
     USER_ID_ERROR("command.error.user_id_incorrect"),
+    USER_NOT_FRIEND_ERROR("command.info.user_not_friend_error"),
+    USER_IS_FRIEND_ERROR("command.info.user_is_friend_error"),
     PASSWORD_CHANGE_SUCCESSFUL("command.info.password_change_success"),
     PROFILE_CHANGE_SUCCESSFUL("command.info.profile_change_success"),
+    USER_ADD_FRIEND_SUCCESS("command.info.user_friend_success"),
+    USER_DEL_FRIEND_SUCCESS("command.info.user_delfriend_success"),
     VALID("validator.error.valid");
 
     private LocaleManager localeManager = LocaleManager.getInstance();

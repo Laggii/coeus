@@ -53,8 +53,6 @@ public class CourseDaoImpl implements GenericDao<Course> {
     private static final String GET_ALL_QUERY =
             "SELECT * FROM courses JOIN users ON courses.owner_id = users.user_id;";
 
-    private static final String GET_ALL_USERS_QUERY =
-            "SELECT * FROM usercourses JOIN users ON usercourses.user_id = users.user_id WHERE course_id = ?;";
 
     public CourseDaoImpl() throws DaoException {
         try {
@@ -189,28 +187,6 @@ public class CourseDaoImpl implements GenericDao<Course> {
 
             logger.info("Successfully got all Courses");
             return courses;
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement, resultSet);
-        }
-    }
-
-    //TODO: javadoc, test
-    public Collection<User> getUsers(final Course course) throws DaoException {
-        try {
-            connection = connectionPool.takeConnection();
-            Set<User> users = new HashSet<>();
-            statement = connection.prepareStatement(GET_ALL_USERS_QUERY);
-            statement.setLong(1, course.getCourseId());
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                users.add(buildUser(resultSet));
-            }
-
-            logger.info("Successfully got all Users for specified Course");
-            return users;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DaoException(e);
         } finally {

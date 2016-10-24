@@ -5,6 +5,10 @@ import exception.CommandException;
 /**
  * Created by Alexeev on 17.10.2016.
  */
+
+/**
+ * CommandFactory provides suitable Command object based on user "action" request parameter
+ */
 public class CommandFactory {
     private static CommandFactory ourInstance = new CommandFactory();
 

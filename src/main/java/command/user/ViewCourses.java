@@ -1,7 +1,9 @@
 package command.user;
 
 import command.Command;
+import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
+import database.dao.mysql.UserCoursesDaoImpl;
 import database.dao.mysql.UserDaoImpl;
 import exception.DaoException;
 import model.Course;
@@ -26,12 +28,12 @@ public class ViewCourses extends Command {
         HttpSession session = request.getSession();
 
         CourseDaoImpl courseDao = new CourseDaoImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
+        UserCoursesDao userCoursesDao = new UserCoursesDaoImpl();
 
         Collection<Course> courses = courseDao.getAll();
         request.setAttribute("courses", courses);
 
-        Collection<Course> userCourses = userDao.getCourses((User) session.getAttribute("user"));
+        Collection<Course> userCourses = userCoursesDao.getCourses((User) session.getAttribute("user"));
         request.setAttribute("userCourses", userCourses);
         return "/courses.jsp";
     }

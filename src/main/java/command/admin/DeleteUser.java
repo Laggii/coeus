@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 /**
- * DeleteUser command processes admin delete user request
+ * TODO: DeleteUser command processes admin delete user request
  */
 public class DeleteUser extends Command {
     @Override

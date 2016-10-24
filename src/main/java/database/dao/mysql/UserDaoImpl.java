@@ -57,16 +57,6 @@ public class UserDaoImpl implements GenericDao<User> {
     private static final String GET_ALL_QUERY =
             "SELECT * FROM users";
 
-    private static final String GET_USER_COURSES =
-            "SELECT * FROM courses " +
-                    "INNER JOIN users on courses.owner_id = users.user_id " +
-                    "INNER JOIN usercourses ON usercourses.course_id = courses.course_id " +
-                    "WHERE usercourses.user_id = ?;";
-
-    private static final String GET_USER_FRIENDS = "SELECT * FROM users " +
-            "INNER JOIN userfriends on userfriends.friend_id = users.user_id " +
-            "WHERE userfriends.user_id = ?";
-
     public UserDaoImpl() throws DaoException {
         try {
             this.connectionPool = ConnectionPool.getInstance();
@@ -238,48 +228,6 @@ public class UserDaoImpl implements GenericDao<User> {
             connectionPool.closeConnection(connection, statement, resultSet);
         }
         return null;
-    }
-
-    //TODO: javadoc and tests
-    public Collection<Course> getCourses(final User user) throws DaoException {
-        try {
-            connection = connectionPool.takeConnection();
-            Set<Course> courses = new HashSet<>();
-            statement = connection.prepareStatement(GET_USER_COURSES);
-            statement.setLong(1, user.getUserId());
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                courses.add(buildCourse(resultSet));
-            }
-            logger.info("Successfully got all Courses for specified User");
-            return courses;
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement, resultSet);
-        }
-    }
-
-    //TODO: javadoc and tests
-    public Collection<User> getFriends(final User user) throws DaoException {
-        try {
-            connection = connectionPool.takeConnection();
-            Set<User> users = new HashSet<>();
-            statement = connection.prepareStatement(GET_USER_FRIENDS);
-            statement.setLong(1, user.getUserId());
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                users.add(buildUser(resultSet));
-            }
-            logger.info("Successfully got all Friends for specified User");
-            return users;
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement, resultSet);
-        }
     }
 
     /**

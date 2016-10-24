@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Created by Alexeev on 29.09.2016.
  */
@@ -32,6 +34,19 @@ public class Role {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return roleId == role.roleId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roleId);
     }
 
     private Role(Builder builder) {

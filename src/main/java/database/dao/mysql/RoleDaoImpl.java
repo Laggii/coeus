@@ -59,7 +59,6 @@ public class RoleDaoImpl implements GenericDao<Role> {
         }
     }
 
-
     @Override
     public boolean create(final Role role) throws DaoException {
         try {

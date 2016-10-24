@@ -67,8 +67,32 @@
                                 <br>
                             </address>
                             <c:if test="${! (userProfile.userId == user.userId)}">
-                                <a class="btn btn-info btn-xs" role="button" href="#">Add to Friends</a>
-                                <a class="btn btn-info btn-xs" role="button" href="#">Send message</a>
+                                <c:choose>
+                                    <c:when test="${(empty isFriend)}"><a class="btn btn-info btn-xs" role="button" href="./main?action=addfriend&id=${userProfile.userId}">Add to Friends</a></c:when>
+                                    <c:when test="${! (empty isFriend)}"><a class="btn btn-warning btn-xs" role="button" href="./main?action=delfriend&id=${userProfile.userId}">Remove Friend</a></c:when>
+                                </c:choose>
+                                <a class="btn btn-info btn-xs" role="button" href="#">Send Message</a>
+                            </c:if>
+                            <c:if test="${(user.roleId) == 3}">
+                                <br>
+                                <a class="btn btn-warning btn-xs" role="button" href="#">Delete User</a>
+                                <a class="btn btn-info btn-xs" role="button" href="#">Edit User</a>
+                            </c:if>
+                            <c:if test="${! (empty errorMsg)}">
+                                </br>
+                                </br>
+                                <div class="alert alert-danger">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${errorMsg}"/>
+                                </div>
+                            </c:if>
+                            <c:if test="${! (empty successMsg)}">
+                                </br>
+                                </br>
+                                <div class="alert alert-success">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${successMsg}"/>
+                                </div>
                             </c:if>
                         </div>
                         <div class="media-right">

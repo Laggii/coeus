@@ -1,7 +1,9 @@
 package command.user;
 
 import command.Command;
+import database.dao.interfaces.UserFriendsDao;
 import database.dao.mysql.UserDaoImpl;
+import database.dao.mysql.UserFriendsDaoImpl;
 import exception.DaoException;
 import model.User;
 
@@ -22,8 +24,8 @@ public class ViewFriends extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
-        UserDaoImpl userDao = new UserDaoImpl();
-        Collection<User> userFriends = userDao.getFriends((User) session.getAttribute("user"));
+        UserFriendsDao userFriendsDao = new UserFriendsDaoImpl();
+        Collection<User> userFriends = userFriendsDao.getFriends((User) session.getAttribute("user"));
         request.setAttribute("userFriends", userFriends);
         return "friends.jsp";
     }

@@ -18,6 +18,7 @@ import java.util.UUID;
 /**
  * TokenFilter provides protection from CRSF attack by setting token in every form and validating it later with token in session
  * Spring CSRF protection: http://docs.spring.io/spring-security/site/docs/current/reference/html/csrf.html
+ * TODO: change using cookies (too much repeating code for the moment)
  */
 //@WebFilter(urlPatterns = {"/login", "/registration", "/logout", "/main"})
 public class TokenFilter implements Filter {
