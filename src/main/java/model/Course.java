@@ -16,7 +16,7 @@ public class Course {
 
     private String description;
 
-    private final Timestamp dateCreated;
+    private Timestamp dateCreated;
 
     public long getCourseId() {
         return courseId;
@@ -34,6 +34,14 @@ public class Course {
         return description;
     }
 
+    public Timestamp getDateCreated() {
+        return dateCreated;
+    }
+
+    public boolean isOwner(User user) {
+        return owner.equals(user);
+    }
+
     public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
@@ -48,6 +56,10 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDateCreated(Timestamp dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     @Override

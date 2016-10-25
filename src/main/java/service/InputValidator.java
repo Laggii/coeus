@@ -21,6 +21,8 @@ public class InputValidator {
     private static final String NAME_REGEX = "^\\pL*";
     private static final String ID_REGEX = "^[0-9]+$";
     private static final String PHONE_REGEX = "\\+\\d\\s\\(\\d{3}\\)\\s\\d{3}-\\d{2}-\\d{2}";
+    private static final String COURSE_NAME_REGEX = "^\\pL[\\pL\\pZ]*";
+    private static final String COURSE_DESCRIPTION_REGEX = "^[\\pL\\pZ\\pN\\pP]*";
 
     /**
      * Validate email string using Apache Commons EmailValidator
@@ -91,6 +93,27 @@ public class InputValidator {
     public static boolean validateBirthDate(String birthDate) {
         return dateValidator.isValid(birthDate);
     }
+
+    /**
+     * Validate course name
+     *
+     * @param name
+     * @return true if name is valid
+     */
+    public static boolean validateCourseName(String name) {
+        return name != null && !name.isEmpty() && name.length() <= 35 && name.matches(COURSE_NAME_REGEX);
+    }
+
+    /**
+     * Validate course description
+     *
+     * @param description
+     * @return true if valid
+     */
+    public static boolean validateCourseDescription(String description) {
+        return description != null && !description.isEmpty() && description.length() <= 255 && description.matches(COURSE_DESCRIPTION_REGEX);
+    }
+
 
     /**
      * Validate login form
@@ -200,6 +223,17 @@ public class InputValidator {
             return BIRTHDATE_INVALID_ERROR;
         }
 
+        return VALID;
+    }
+
+    public static MessageProvider validateCourse(String name, String description) {
+        if (!validateCourseName(name)) {
+            return COURSE_NAME_INVALID_ERROR;
+        }
+
+        if (!validateCourseDescription(description)) {
+            return COURSE_DESC_INVALID_ERROR;
+        }
         return VALID;
     }
 }

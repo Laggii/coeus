@@ -67,6 +67,18 @@ public class User {
         return regDate;
     }
 
+    public boolean getIsStudent() {
+        return this.roleId == 1;
+    }
+
+    public boolean getIsTeacher() {
+        return this.roleId == 2;
+    }
+
+    public boolean getIsAdmin() {
+        return this.roleId == 3;
+    }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }

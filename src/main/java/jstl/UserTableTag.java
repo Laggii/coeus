@@ -46,7 +46,7 @@ public class UserTableTag extends TagSupport {
                             "                        <td>%s</td>\n" +
                             "                        <td><a href=\"./main?action=profile&id=%d\">View Profile</a></td>\n" +
                             "                    </tr>",
-                    user.getEmail(), user.getFirstName(), user.getLastName(), userRole, user.getUserId()));
+                    user.getFirstName(), user.getLastName(), user.getEmail(), userRole, user.getUserId()));
         } catch (IOException e) {
             e.printStackTrace();
         }

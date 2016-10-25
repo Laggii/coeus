@@ -13,25 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
-import static service.MessageProvider.USER_DEL_FRIEND_SUCCESS;
-import static service.MessageProvider.USER_ID_ERROR;
-import static service.MessageProvider.USER_NOT_FRIEND_ERROR;
+import static service.MessageProvider.*;
 
 /**
  * Created by Alexeev on 24.10.2016.
  */
 
 /**
- * DeleteFriend command processes user request to delete user's friend
+ * RemoveFriend command processes user request to remove user's friend
  */
-public class DeleteFriend extends Command {
+public class RemoveFriend extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
-        UserFriendsDao userFriendsDao = new UserFriendsDaoImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
-
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+
+        UserFriendsDao userFriendsDao = new UserFriendsDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
 
         String idParameter = request.getParameter("id");
 
@@ -40,16 +38,20 @@ public class DeleteFriend extends Command {
             User friend = userDao.read(friendId);
             Collection<User> friends = userFriendsDao.getFriends(user);
 
-            if (friends.contains(friend)) {
-                userFriendsDao.delFriend(user, friend);
-                request.setAttribute("successMsg", USER_DEL_FRIEND_SUCCESS);
+            if (friend != null) {
+                if (friends.contains(friend)) {
+                    userFriendsDao.delFriend(user, friend);
+                    request.setAttribute("successMsg", USER_DEL_FRIEND_SUCCESS);
+                } else {
+                    request.setAttribute("errorMsg", USER_NOT_FRIEND_ERROR);
+                }
+                return "/main?action=profile&id=" + friendId;
             } else {
-                request.setAttribute("errorMsg", USER_NOT_FRIEND_ERROR);
+                request.setAttribute("errorMsg", USER_NOT_FOUND_ERROR);
             }
-            return "./main?action=profile&id=" + friendId;
         } else {
             request.setAttribute("errorMsg", USER_ID_ERROR);
-            return "/main.jsp";
         }
+        return "/main.jsp";
     }
 }

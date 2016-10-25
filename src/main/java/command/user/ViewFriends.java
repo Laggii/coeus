@@ -27,6 +27,6 @@ public class ViewFriends extends Command {
         UserFriendsDao userFriendsDao = new UserFriendsDaoImpl();
         Collection<User> userFriends = userFriendsDao.getFriends((User) session.getAttribute("user"));
         request.setAttribute("userFriends", userFriends);
-        return "friends.jsp";
+        return "/friends.jsp";
     }
 }

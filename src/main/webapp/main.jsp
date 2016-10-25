@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Coeus - Profile page</title>
+    <title>Coeus - Information page</title>
     <!-- navbar / footer css should be be included here -->
     <link href="css/navbar.css" rel="stylesheet">
     <link href="css/footer.css" rel="stylesheet">
@@ -34,6 +34,13 @@
                         <div class="alert alert-danger">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${errorMsg}"/>
+                        </div>
+                    </c:if>
+                    <c:if test="${! (empty successMsg)}">
+                        </br>
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${successMsg}"/>
                         </div>
                     </c:if>
                 </div>

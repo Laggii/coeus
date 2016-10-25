@@ -29,22 +29,23 @@ Since my project is related to study, students and teachers, I use this naming.
 ## Features
 - Homegrown Login and Registration with password encryption
 - Homegrown Roles system (Student/Teacher/Admin)
-- User profiles and Friends
-- Courses information (5)
+- User profiles and Friends (add friend/remove friend)
+- Courses information (join/left/create/edit)
 - Localization (ru/eng)
 - Full User input validation
 - Error Handler (any application exceptions or http errors)
 - CSRF protection (token)
 
-## Cons
+## TODO
 - Messages are not implemented yet
-- getAll() methods return full collections from database (no pagination, see notes) (6)
+- getAll() methods return full collections from database (no pagination, see notes) (5)
 - I query the database the whole time and the best choice is to use caching
+- Deploy demo with Docker and AWS
+- Screenshots
 
 ## Notes
 - (1) Well, it wasn't really a quick start, I spent hours to get elements working and looking good.
 - (2) DataTables is an amazing, really amazing jQuery plugin with Bootstrap support. Provides new functionality for tables
 - (3) All I know it's not md5 (which is old and bad) and passwords are encrypted with salt.
 - (4) See Commands and CommandFactory. Yes, its named Command but it's still a Strategy pattern (should be renamed to Action mb)
-- (5) Courses commands will be finished soon
-- (6) Well, yeah, I have search, sorting and pagination provided by DataTables but I get the whole table from db. This is not really good in production but fine for a small project.
+- (5) Well, yeah, I have search, sorting and pagination provided by DataTables but I get the whole table from db. This is not really good in production but fine for a small project.

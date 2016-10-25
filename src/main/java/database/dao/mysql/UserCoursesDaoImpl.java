@@ -32,7 +32,11 @@ public class UserCoursesDaoImpl implements UserCoursesDao {
 
     private ResultSet resultSet;
 
-    private static final String GET_USER_COURSES =
+    private static final String JOIN_COURSE_QUERY = "INSERT INTO usercourses (course_id,user_id) VALUES (?,?)";
+
+    private static final String LEFT_COURSE_QUERY = "DELETE FROM usercourses WHERE course_id = ? AND user_id = ?;";
+
+    private static final String GET_USER_COURSES_QUERY =
             "SELECT * FROM courses " +
                     "INNER JOIN users on courses.owner_id = users.user_id " +
                     "INNER JOIN usercourses ON usercourses.course_id = courses.course_id " +
@@ -53,23 +57,49 @@ public class UserCoursesDaoImpl implements UserCoursesDao {
 
     @Override
     public boolean joinCourse(final User user, final Course course) throws DaoException {
-        return false;
+        try {
+            connection = connectionPool.takeConnection();
+            statement = connection.prepareStatement(JOIN_COURSE_QUERY);
+            statement.setLong(1, course.getCourseId());
+            statement.setLong(2,user.getUserId());
+            statement.execute();
+
+            logger.info("User successfully joined Course");
+            return true;
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            connectionPool.closeConnection(connection, statement);
+        }
     }
 
     @Override
     public boolean leftCourse(final User user, final Course course) throws DaoException {
-        return false;
+        try {
+            connection = connectionPool.takeConnection();
+            statement = connection.prepareStatement(LEFT_COURSE_QUERY);
+            statement.setLong(1, course.getCourseId());
+            statement.setLong(2,user.getUserId());
+            statement.execute();
+
+            logger.info("User successfully left Course");
+            return true;
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            connectionPool.closeConnection(connection, statement);
+        }
     }
 
     @Override
     public Collection<Course> getCourses(final User user) throws DaoException {
         try {
             connection = connectionPool.takeConnection();
-            Set<Course> courses = new HashSet<>();
-            statement = connection.prepareStatement(GET_USER_COURSES);
+            statement = connection.prepareStatement(GET_USER_COURSES_QUERY);
             statement.setLong(1, user.getUserId());
             resultSet = statement.executeQuery();
 
+            Set<Course> courses = new HashSet<>();
             while (resultSet.next()) {
                 courses.add(buildCourse(resultSet));
             }
@@ -86,11 +116,11 @@ public class UserCoursesDaoImpl implements UserCoursesDao {
     public Collection<User> getUsers(final Course course) throws DaoException {
         try {
             connection = connectionPool.takeConnection();
-            Set<User> users = new HashSet<>();
             statement = connection.prepareStatement(GET_ALL_USERS_QUERY);
             statement.setLong(1, course.getCourseId());
             resultSet = statement.executeQuery();
 
+            Set<User> users = new HashSet<>();
             while (resultSet.next()) {
                 users.add(buildUser(resultSet));
             }

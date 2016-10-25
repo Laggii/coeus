@@ -32,13 +32,13 @@ public class UserFriendsDaoImpl implements UserFriendsDao {
 
     private static final Logger logger = Logger.getLogger(UserFriendsDaoImpl.class);
 
-    private static final String ADD_FRIEND = "INSERT INTO userfriends (user_id,friend_id) VALUES (?,?)";
+    private static final String ADD_FRIEND_QUERY = "INSERT INTO userfriends (user_id,friend_id) VALUES (?,?)";
 
-    private static final String GET_USER_FRIENDS = "SELECT * FROM users " +
+    private static final String DELETE_FRIEND_QUERY = "DELETE FROM userfriends WHERE user_id = ? AND friend_id = ?;";
+
+    private static final String GET_USER_FRIENDS_QUERY = "SELECT * FROM users " +
             "INNER JOIN userfriends on userfriends.friend_id = users.user_id " +
             "WHERE userfriends.user_id = ?";
-
-    private static final String DELETE_FRIEND = "DELETE FROM userfriends WHERE user_id = ? AND friend_id = ?;";
 
     public UserFriendsDaoImpl() throws DaoException {
         try {
@@ -52,7 +52,7 @@ public class UserFriendsDaoImpl implements UserFriendsDao {
     public boolean addFriend(User user, User friend) throws DaoException {
         try {
             connection = connectionPool.takeConnection();
-            statement = connection.prepareStatement(ADD_FRIEND);
+            statement = connection.prepareStatement(ADD_FRIEND_QUERY);
             statement.setLong(1, user.getUserId());
             statement.setLong(2, friend.getUserId());
             statement.execute();
@@ -70,7 +70,7 @@ public class UserFriendsDaoImpl implements UserFriendsDao {
     public boolean delFriend(User user, User friend) throws DaoException {
         try {
             connection = connectionPool.takeConnection();
-            statement = connection.prepareStatement(DELETE_FRIEND);
+            statement = connection.prepareStatement(DELETE_FRIEND_QUERY);
             statement.setLong(1, user.getUserId());
             statement.setLong(2, friend.getUserId());
             statement.execute();
@@ -89,7 +89,7 @@ public class UserFriendsDaoImpl implements UserFriendsDao {
         try {
             connection = connectionPool.takeConnection();
             Set<User> users = new HashSet<>();
-            statement = connection.prepareStatement(GET_USER_FRIENDS);
+            statement = connection.prepareStatement(GET_USER_FRIENDS_QUERY);
             statement.setLong(1, user.getUserId());
             resultSet = statement.executeQuery();
 

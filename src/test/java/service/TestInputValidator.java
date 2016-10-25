@@ -133,6 +133,29 @@ public class TestInputValidator {
     }
 
     @Test
+    public void testValidateCourseName() {
+        assertTrue(InputValidator.validateCourseName("Math"));
+        assertTrue(InputValidator.validateCourseName("Math Course"));
+        assertFalse(InputValidator.validateCourseName("Math course,"));
+        assertFalse(InputValidator.validateCourseName("'Math' course"));
+        assertFalse(InputValidator.validateCourseName("<Math> course"));
+        assertFalse(InputValidator.validateCourseName(" "));
+        assertFalse(InputValidator.validateCourseName("          "));
+        assertFalse(InputValidator.validateCourseName(null));
+
+    }
+
+    @Test
+    public void testValidateCourseDescription() {
+        assertTrue(InputValidator.validateCourseDescription("Math Course"));
+        assertTrue(InputValidator.validateCourseDescription("Math Course, something more"));
+        assertTrue(InputValidator.validateCourseDescription("Math Course: 1) one 2) two 3) three"));
+        assertFalse(InputValidator.validateCourseName("Math Course <script></script>"));
+        assertFalse(InputValidator.validateCourseName(""));
+        assertFalse(InputValidator.validateCourseName(null));
+    }
+
+    @Test
     public void testValidateRegistration() {
         String email = "example@example.com";
         String firstName = "John";
@@ -215,6 +238,20 @@ public class TestInputValidator {
         birthDate = "aug 1 2012";
         assertEquals(BIRTHDATE_INVALID_ERROR,
                 InputValidator.validateProfileChange(email, firstName, lastName, sex, phone, birthDate));
+    }
+
+    @Test
+    public void testValidateCourse() {
+        String name = "Math";
+        String desc = "Math course";
+        assertEquals(VALID, InputValidator.validateCourse(name, desc));
+
+        name = "";
+        assertEquals(COURSE_NAME_INVALID_ERROR, InputValidator.validateCourse(name, desc));
+
+        name = "Math";
+        desc = "";
+        assertEquals(COURSE_DESC_INVALID_ERROR, InputValidator.validateCourse(name, desc));
     }
 
 }

@@ -29,14 +29,20 @@
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">All courses</h3>
+                    <h3 class="panel-title pull-left">All courses</h3>
+                    <c:if test="${! (user.isStudent)}">
+                        <button type="button" class="btn btn-success btn-xs pull-right" data-toggle="modal"
+                                data-target="#courseModal">Create new
+                        </button>
+                    </c:if>
+                    <div class="clearfix"></div>
                 </div>
                 <table id="courses" class="table table-striped">
                     <thead>
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Owner</th>
+                        <th>Teacher</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -59,7 +65,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Owner</th>
+                            <th>Teacher</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -72,6 +78,60 @@
                 </c:if>
             </div>
 
+            <!-- Modal Add Course-->
+            <c:if test="${! (user.isStudent)}">
+                <div id="courseModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Create Course</h4>
+                            </div>
+                            <form method="POST" action="./main">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="control-label">Name:</label>
+                                        <input class="form-control" name="name" maxlength="35"
+                                               value="<c:out value="${name}"/>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Description:</label>
+                                        <textarea class="form-control" name="description" maxlength="255"
+                                                  required><c:out value="${description}"/></textarea>
+                                    </div>
+                                    <input type="hidden" name="action" value="addcourse">
+
+                                    <c:if test="${! (empty errorMsg)}">
+                                        </br>
+                                        <div class="alert alert-danger">
+                                                    <span class="glyphicon glyphicon-exclamation-sign"
+                                                          aria-hidden="true"></span>
+                                            <a class="close" data-dismiss="alert" href="#">×</a><c:out
+                                                value="${errorMsg}"/>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${! (empty successMsg)}">
+                                        </br>
+                                        <div class="alert alert-success">
+                                                    <span class="glyphicon glyphicon-exclamation-sign"
+                                                          aria-hidden="true"></span>
+                                            <a class="close" data-dismiss="alert" href="#">×</a><c:out
+                                                value="${successMsg}"/>
+                                        </div>
+                                    </c:if>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
         </div>
     </div>
     <!-- Footer -->
@@ -88,5 +148,12 @@
         $('#usercourses').DataTable();
     });
 </script>
+<c:if test="${!(empty errorMsg) || !(empty successMsg)}">
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#courseModal').modal('show');
+        });
+    </script>
+</c:if>
 </body>
 </html>

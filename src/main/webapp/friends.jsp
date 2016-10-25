@@ -35,9 +35,9 @@
                     <table id="friends" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Email</th>
                             <th>Role</th>
                             <th>Action</th>
                         </tr>

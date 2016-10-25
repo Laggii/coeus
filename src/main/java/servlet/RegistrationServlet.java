@@ -86,7 +86,9 @@ public class RegistrationServlet extends HttpServlet {
                 printError(USER_EXISTS_ERROR, request, response);
             } else {
                 userDao.create(user);
-                user.setUserId(userDao.getId(email));
+
+                //update id and registration date
+                user = userDao.read(email);
 
                 session.setAttribute("user", user);
                 logger.info("Successfully registered new user: {" + user.getEmail() + "," + user.getFirstName() + "," + user.getLastName() + "}");

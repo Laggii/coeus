@@ -11,9 +11,9 @@
         <h5><p>${user.firstName} ${user.lastName}</p>
             <p>${user.email}</p>
             <c:choose>
-                <c:when test="${user.roleId==1}">Student</c:when>
-                <c:when test="${user.roleId==2}">Teacher</c:when>
-                <c:when test="${user.roleId==3}">Admin</c:when>
+                <c:when test="${user.isStudent}">Student</c:when>
+                <c:when test="${user.isTeacher}">Teacher</c:when>
+                <c:when test="${user.isAdmin}">Admin</c:when>
                 <c:otherwise>User</c:otherwise>
             </c:choose>
         </h5>

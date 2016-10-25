@@ -46,7 +46,6 @@ public class EditProfile extends Command {
         MessageProvider validationResult = InputValidator.validateProfileChange(email, firstName, lastName, sex, phone, birthDate);
         if (validationResult != VALID) {
             request.setAttribute("errorMsg", validationResult);
-            return "/settings.jsp";
         } else {
             //convert date to avoid sql error
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -68,7 +67,7 @@ public class EditProfile extends Command {
             userDao.update(user);
             session.setAttribute("user", user);
             request.setAttribute("successMsg", PROFILE_CHANGE_SUCCESSFUL);
-            return "/settings.jsp";
         }
+        return "/settings.jsp";
     }
 }

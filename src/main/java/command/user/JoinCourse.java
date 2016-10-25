@@ -1,4 +1,4 @@
-package command.teacher;
+package command.user;
 
 import command.Command;
 import database.dao.interfaces.UserCoursesDao;
@@ -12,24 +12,22 @@ import service.InputValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.util.Collection;
 
 import static service.MessageProvider.*;
 
 /**
- * Created by Alexeev on 23.10.2016.
+ * Created by Alexeev on 25.10.2016.
  */
-
-/**
- * DeleteCourse command processes Admin/Teacher request to delete course
- */
-public class DeleteCourse extends Command {
+public class JoinCourse extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
         CourseDaoImpl courseDao = new CourseDaoImpl();
+        UserCoursesDao userCoursesDao = new UserCoursesDaoImpl();
 
         String idParameter = request.getParameter("id");
 
@@ -38,14 +36,14 @@ public class DeleteCourse extends Command {
             Course course = courseDao.read(courseId);
 
             if (course != null) {
-                //Check that user is Admin or Course Owner
-                if ((user.getIsTeacher() && course.isOwner(user)) || user.getIsAdmin()) {
-                    courseDao.delete(course);
-                    request.setAttribute("successMsg", COURSE_DELETED_SUCCESS);
+                Collection<Course> userCourses = userCoursesDao.getCourses(user);
+                if (!userCourses.contains(course)) {
+                    userCoursesDao.joinCourse(user, course);
+                    request.setAttribute("successMsg", COURSE_JOIN_SUCCESS);
                 } else {
-                    request.setAttribute("errorMsg", INSUFFICIENT_RIGHTS_ERROR);
-                    return "/main?action=course&id=" + courseId;
+                    request.setAttribute("errorMsg", COURSE_ALREADY_JOINED_ERROR);
                 }
+                return "/main?action=course&id=" + courseId;
             } else {
                 request.setAttribute("errorMsg", COURSE_NOT_FOUND_ERROR);
             }

@@ -39,12 +39,13 @@
                             <address>
                                 <h4 class="media-heading">
                                     <strong>${userProfile.firstName} ${userProfile.lastName},</strong>
-                                    <i><c:choose>
-                                        <c:when test="${userProfile.roleId==1}">Student</c:when>
-                                        <c:when test="${userProfile.roleId==2}">Teacher</c:when>
-                                        <c:when test="${userProfile.roleId==3}">Admin</c:when>
-                                        <c:otherwise>User</c:otherwise>
-                                    </c:choose>
+                                    <i>
+                                        <c:choose>
+                                            <c:when test="${user.isStudent}">Student</c:when>
+                                            <c:when test="${user.isTeacher}">Teacher</c:when>
+                                            <c:when test="${user.isAdmin}">Admin</c:when>
+                                            <c:otherwise>User</c:otherwise>
+                                        </c:choose>
                                     </i>
                                 </h4>
                                 <br>
@@ -68,15 +69,14 @@
                             </address>
                             <c:if test="${! (userProfile.userId == user.userId)}">
                                 <c:choose>
-                                    <c:when test="${(empty isFriend)}"><a class="btn btn-info btn-xs" role="button" href="./main?action=addfriend&id=${userProfile.userId}">Add to Friends</a></c:when>
-                                    <c:when test="${! (empty isFriend)}"><a class="btn btn-warning btn-xs" role="button" href="./main?action=delfriend&id=${userProfile.userId}">Remove Friend</a></c:when>
+                                    <c:when test="${(empty isFriend)}"><a class="btn btn-info btn-xs" role="button"
+                                                                          href="./main?action=addfriend&id=${userProfile.userId}">Add
+                                        to Friends</a></c:when>
+                                    <c:when test="${! (empty isFriend)}"><a class="btn btn-warning btn-xs" role="button"
+                                                                            href="./main?action=delfriend&id=${userProfile.userId}">Remove
+                                        Friend</a></c:when>
                                 </c:choose>
                                 <a class="btn btn-info btn-xs" role="button" href="#">Send Message</a>
-                            </c:if>
-                            <c:if test="${(user.roleId) == 3}">
-                                <br>
-                                <a class="btn btn-warning btn-xs" role="button" href="#">Delete User</a>
-                                <a class="btn btn-info btn-xs" role="button" href="#">Edit User</a>
                             </c:if>
                             <c:if test="${! (empty errorMsg)}">
                                 </br>
@@ -137,9 +137,9 @@
                     <table id="friends" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Email</th>
                             <th>Role</th>
                             <th>Action</th>
                         </tr>

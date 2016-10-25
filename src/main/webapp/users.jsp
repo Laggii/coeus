@@ -34,9 +34,9 @@
                 <table id="users" class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Email</th>
                         <th>Role</th>
                         <th>Action</th>
                     </tr>

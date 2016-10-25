@@ -50,7 +50,6 @@ public class ChangePassword extends Command {
         //validate old password is correct
         if (!checkPassword(oldPassword, oldHash)) {
             request.setAttribute("errorMsg", OLD_PASSWORD_INVALID_ERROR);
-            return "/settings.jsp";
         } else {
             //change password and update user in session
             newHash = encryptPassword(newPassword);
@@ -59,7 +58,7 @@ public class ChangePassword extends Command {
             session.setAttribute("user", user);
 
             request.setAttribute("successMsg", PASSWORD_CHANGE_SUCCESSFUL);
-            return "/settings.jsp";
         }
+        return "/settings.jsp";
     }
 }

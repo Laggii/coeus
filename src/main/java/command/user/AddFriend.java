@@ -14,9 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Collection;
 
-import static service.MessageProvider.USER_ADD_FRIEND_SUCCESS;
-import static service.MessageProvider.USER_ID_ERROR;
-import static service.MessageProvider.USER_IS_FRIEND_ERROR;
+import static service.MessageProvider.*;
 
 /**
  * Created by Alexeev on 24.10.2016.
@@ -28,11 +26,11 @@ import static service.MessageProvider.USER_IS_FRIEND_ERROR;
 public class AddFriend extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
-        UserFriendsDao userFriendsDao = new UserFriendsDaoImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
-
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+
+        UserFriendsDao userFriendsDao = new UserFriendsDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
 
         String idParameter = request.getParameter("id");
 
@@ -41,13 +39,18 @@ public class AddFriend extends Command {
             User friend = userDao.read(friendId);
             Collection<User> friends = userFriendsDao.getFriends(user);
 
-            if (!friends.contains(friend)) {
-                userFriendsDao.addFriend(user, friend);
-                request.setAttribute("successMsg", USER_ADD_FRIEND_SUCCESS);
+            if (friend != null) {
+                if (!friends.contains(friend)) {
+                    userFriendsDao.addFriend(user, friend);
+                    request.setAttribute("successMsg", USER_ADD_FRIEND_SUCCESS);
+                } else {
+                    request.setAttribute("errorMsg", USER_IS_FRIEND_ERROR);
+                }
+                return "/main?action=profile&id=" + friendId;
             } else {
-                request.setAttribute("errorMsg", USER_IS_FRIEND_ERROR);
+                request.setAttribute("errorMsg", USER_NOT_FOUND_ERROR);
+                return "/main.jsp";
             }
-            return "./main?action=profile&id=" + friendId;
         } else {
             request.setAttribute("errorMsg", USER_ID_ERROR);
             return "/main.jsp";

@@ -28,7 +28,7 @@ import static service.MessageProvider.*;
  */
 public class ViewProfile extends Command {
 
-    User loggedUser;
+    private User loggedUser;
 
     private UserDaoImpl userDao;
 
@@ -59,12 +59,11 @@ public class ViewProfile extends Command {
                 return setInfo(request, user);
             } else {
                 request.setAttribute("errorMsg", USER_NOT_FOUND_ERROR);
-                return "/main.jsp";
             }
         } else {
             request.setAttribute("errorMsg", USER_ID_ERROR);
-            return "/main.jsp";
         }
+        return "/main.jsp";
     }
 
     /**
