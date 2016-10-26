@@ -15,7 +15,7 @@ import java.util.Collection;
 public interface UserFriendsDao {
 
     /**
-     * Add user to friends list
+     * Add user to friends list of another user
      *
      * @param user
      * @param friend
@@ -25,7 +25,7 @@ public interface UserFriendsDao {
     boolean addFriend(final User user, final User friend) throws DaoException;
 
     /**
-     * Delete user from friends list
+     * Delete user from friends list of another user
      *
      * @param user
      * @param friend
@@ -35,7 +35,7 @@ public interface UserFriendsDao {
     boolean delFriend(final User user, final User friend) throws DaoException;
 
     /**
-     * Get all user friends
+     * Get all friends for specified user
      *
      * @param user
      * @return Colection of users

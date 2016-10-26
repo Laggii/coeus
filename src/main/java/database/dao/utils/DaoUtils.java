@@ -11,6 +11,10 @@ import java.sql.SQLException;
 /**
  * Created by Alexeev on 21.10.2016.
  */
+
+/**
+ * DaoUtils provides functionality of building different beans from Resultsets
+ */
 public class DaoUtils {
 
     /**

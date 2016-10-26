@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * ViewSettings command processes user request to see user settings page
  */
 public class ViewSettings extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         return "/settings.jsp";

@@ -5,6 +5,10 @@ import java.util.Objects;
 /**
  * Created by Alexeev on 29.09.2016.
  */
+
+/**
+ * Role Bean with Builder pattern
+ */
 public class Role {
 
     private long roleId;

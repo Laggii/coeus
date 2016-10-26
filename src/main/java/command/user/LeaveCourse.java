@@ -19,7 +19,12 @@ import static service.MessageProvider.*;
 /**
  * Created by Alexeev on 25.10.2016.
  */
+
+/**
+ * LeaveCourse command processes user request to leave specified Course
+ */
 public class LeaveCourse extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
@@ -30,6 +35,7 @@ public class LeaveCourse extends Command {
 
         String idParameter = request.getParameter("id");
 
+        //validate id parameter
         if (InputValidator.validateId(idParameter)) {
             long courseId = Long.parseLong(idParameter);
             Course course = courseDao.read(courseId);

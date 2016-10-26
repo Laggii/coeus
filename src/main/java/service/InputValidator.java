@@ -116,7 +116,7 @@ public class InputValidator {
 
 
     /**
-     * Validate login form
+     * Validate login form parameters
      *
      * @param email
      * @param password
@@ -133,7 +133,7 @@ public class InputValidator {
     }
 
     /**
-     * Validate registration form
+     * Validate registration form parameters
      *
      * @param email
      * @param firstName
@@ -168,7 +168,7 @@ public class InputValidator {
     }
 
     /**
-     * Validate change password form
+     * Validate change password form parameters
      *
      * @param oldPassword
      * @param newPassword
@@ -188,7 +188,7 @@ public class InputValidator {
     }
 
     /**
-     * Validate profile settings form
+     * Validate profile settings form parameters
      *
      * @param email
      * @param firstName
@@ -226,6 +226,13 @@ public class InputValidator {
         return VALID;
     }
 
+    /**
+     * Validate edit/create new Course form parameters
+     *
+     * @param name
+     * @param description
+     * @return valid information code if valid
+     */
     public static MessageProvider validateCourse(String name, String description) {
         if (!validateCourseName(name)) {
             return COURSE_NAME_INVALID_ERROR;

@@ -1,9 +1,7 @@
 package command.teacher;
 
 import command.Command;
-import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
-import database.dao.mysql.UserCoursesDaoImpl;
 import exception.DaoException;
 import model.Course;
 import model.User;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.Collection;
 
 import static service.MessageProvider.*;
 
@@ -25,7 +22,8 @@ import static service.MessageProvider.*;
 /**
  * EditCourse command processes Admin/Teacher request to change course information
  */
-public class EditCourse  extends Command {
+public class EditCourse extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
@@ -33,6 +31,7 @@ public class EditCourse  extends Command {
 
         CourseDaoImpl courseDao = new CourseDaoImpl();
 
+        //check user rights
         if (!(user.getIsTeacher() || user.getIsAdmin())) {
             request.setAttribute("errorMsg", INSUFFICIENT_RIGHTS_ERROR);
             return "/main.jsp";
@@ -42,11 +41,13 @@ public class EditCourse  extends Command {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
 
+        //validate id from request
         if (InputValidator.validateId(idParameter)) {
             long courseId = Long.parseLong(idParameter);
             Course course = courseDao.read(courseId);
 
             if (course != null) {
+                //validate input parameters
                 MessageProvider validationResult = InputValidator.validateCourse(name, description);
                 if (validationResult != VALID) {
                     request.setAttribute("errorMsgModal", validationResult);

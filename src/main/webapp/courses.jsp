@@ -102,7 +102,7 @@
                                                   required><c:out value="${description}"/></textarea>
                                     </div>
                                     <input type="hidden" name="action" value="addcourse">
-
+                                    <input type="hidden" name="token" value="${token}">
                                     <c:if test="${! (empty errorMsg)}">
                                         </br>
                                         <div class="alert alert-danger">

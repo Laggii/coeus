@@ -22,6 +22,10 @@ import static database.dao.utils.DaoUtils.buildUser;
 /**
  * Created by Alexeev on 24.10.2016.
  */
+
+/**
+ * Mysql implementation of the UserCoursesDao
+ */
 public class UserCoursesDaoImpl implements UserCoursesDao {
 
     private ConnectionPool connectionPool;
@@ -61,7 +65,7 @@ public class UserCoursesDaoImpl implements UserCoursesDao {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(JOIN_COURSE_QUERY);
             statement.setLong(1, course.getCourseId());
-            statement.setLong(2,user.getUserId());
+            statement.setLong(2, user.getUserId());
             statement.execute();
 
             logger.info("User successfully joined Course");
@@ -79,7 +83,7 @@ public class UserCoursesDaoImpl implements UserCoursesDao {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(LEFT_COURSE_QUERY);
             statement.setLong(1, course.getCourseId());
-            statement.setLong(2,user.getUserId());
+            statement.setLong(2, user.getUserId());
             statement.execute();
 
             logger.info("User successfully left Course");

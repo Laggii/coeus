@@ -11,7 +11,7 @@ import java.util.Collection;
  */
 
 /**
- * UserCoursesDao interface with basic operations join, left, get all courses
+ * UserCoursesDao interface with basic operations: join, left, get Courses
  */
 public interface UserCoursesDao {
 
@@ -26,7 +26,7 @@ public interface UserCoursesDao {
     boolean joinCourse(final User user, final Course course) throws DaoException;
 
     /**
-     * Left specified Course
+     * Leave specified Course
      *
      * @param user
      * @param course
@@ -36,7 +36,7 @@ public interface UserCoursesDao {
     boolean leftCourse(final User user, final Course course) throws DaoException;
 
     /**
-     * Get all user Courses
+     * Get all Courses for specified User
      *
      * @param user
      * @return Collection of Courses
@@ -45,7 +45,7 @@ public interface UserCoursesDao {
     Collection<Course> getCourses(final User user) throws DaoException;
 
     /**
-     * Get all users who joined specified course
+     * Get all Users who joined specified Course
      *
      * @param course
      * @return Collection of Users

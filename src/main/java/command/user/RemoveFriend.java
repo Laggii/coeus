@@ -20,9 +20,10 @@ import static service.MessageProvider.*;
  */
 
 /**
- * RemoveFriend command processes user request to remove user's friend
+ * RemoveFriend command processes user request to remove user from friend list
  */
 public class RemoveFriend extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
@@ -33,6 +34,7 @@ public class RemoveFriend extends Command {
 
         String idParameter = request.getParameter("id");
 
+        //validate id parameter
         if (InputValidator.validateId(idParameter)) {
             long friendId = Long.parseLong(idParameter);
             User friend = userDao.read(friendId);

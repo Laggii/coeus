@@ -16,11 +16,10 @@ import java.util.UUID;
  */
 
 /**
- * TokenFilter provides protection from CRSF attack by setting token in every form and validating it later with token in session
+ * TokenFilter provides protection from CSRF attack by setting token in session and validating it later with token in forms
  * Spring CSRF protection: http://docs.spring.io/spring-security/site/docs/current/reference/html/csrf.html
- * TODO: change using cookies (too much repeating code for the moment)
  */
-//@WebFilter(urlPatterns = {"/login", "/registration", "/logout", "/main"})
+@WebFilter(urlPatterns = {"/login", "/registration", "/logout", "/main"})
 public class TokenFilter implements Filter {
     private final static Logger logger = Logger.getLogger(TokenFilter.class);
 
@@ -36,17 +35,19 @@ public class TokenFilter implements Filter {
         HttpSession session = req.getSession(true);
 
         String newToken = UUID.randomUUID().toString();
-        String oldToken = null;
+        String oldToken = (String) session.getAttribute("token");
         String requestToken = request.getParameter("token");
 
-        if (session != null) {
-            oldToken = (String) session.getAttribute("token");
+        //set token for newly created session
+        if (oldToken == null) {
             session.setAttribute("token", newToken);
+            chain.doFilter(req, resp);
+            return;
         }
 
         //All post requests without token in form will be blocked
         if (req.getMethod().equalsIgnoreCase("POST")) {
-            if (oldToken != null && requestToken != null && oldToken.equals(requestToken)) {
+            if (requestToken != null && oldToken.equals(requestToken)) {
                 chain.doFilter(req, resp);
             } else {
                 logger.info("Blocking request with incorrect token from " + req.getRequestURI());

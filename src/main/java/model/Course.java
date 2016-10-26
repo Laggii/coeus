@@ -6,6 +6,10 @@ import java.util.Objects;
 /**
  * Created by Alexeev on 29.09.2016.
  */
+
+/**
+ * Course Bean with Builder pattern
+ */
 public class Course {
 
     private long courseId;
@@ -120,7 +124,7 @@ public class Course {
         }
 
         public Course build() {
-            if(name == null || description == null) {
+            if (name == null || description == null) {
                 throw new IllegalArgumentException("Course required parameters are empty");
             }
             return new Course(this);

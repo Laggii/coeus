@@ -41,9 +41,9 @@
                                     <strong>${userProfile.firstName} ${userProfile.lastName},</strong>
                                     <i>
                                         <c:choose>
-                                            <c:when test="${user.isStudent}">Student</c:when>
-                                            <c:when test="${user.isTeacher}">Teacher</c:when>
-                                            <c:when test="${user.isAdmin}">Admin</c:when>
+                                            <c:when test="${userProfile.isStudent}">Student</c:when>
+                                            <c:when test="${userProfile.isTeacher}">Teacher</c:when>
+                                            <c:when test="${userProfile.isAdmin}">Admin</c:when>
                                             <c:otherwise>User</c:otherwise>
                                         </c:choose>
                                     </i>

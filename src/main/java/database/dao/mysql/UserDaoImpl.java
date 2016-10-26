@@ -22,6 +22,10 @@ import static database.dao.utils.DaoUtils.buildUser;
 /**
  * Created by Alexeev on 30.09.2016.
  */
+
+/**
+ * Mysql implementation of the UserDao
+ */
 public class UserDaoImpl implements GenericDao<User> {
 
     private ConnectionPool connectionPool;
@@ -238,9 +242,6 @@ public class UserDaoImpl implements GenericDao<User> {
      * @throws DaoException
      */
     public boolean isExists(final User user) throws DaoException {
-        if (getId(user.getEmail()) == 0) {
-            return false;
-        }
-        return true;
+        return getId(user.getEmail()) != 0;
     }
 }

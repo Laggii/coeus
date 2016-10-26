@@ -10,7 +10,7 @@ import command.user.*;
  */
 
 /**
- * CommandProvider provides mapping for action commands with corresponding Command Object
+ * CommandProvider provides mapping for action request parameter with corresponding Command Object
  */
 public enum CommandProvider {
     VIEW_USERS("users", new ViewUsers()),

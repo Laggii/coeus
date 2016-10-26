@@ -1,9 +1,7 @@
 package command.teacher;
 
 import command.Command;
-import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
-import database.dao.mysql.UserCoursesDaoImpl;
 import exception.DaoException;
 import model.Course;
 import model.User;
@@ -12,7 +10,6 @@ import service.InputValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 
 import static service.MessageProvider.*;
 
@@ -24,6 +21,7 @@ import static service.MessageProvider.*;
  * DeleteCourse command processes Admin/Teacher request to delete course
  */
 public class DeleteCourse extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
@@ -38,7 +36,7 @@ public class DeleteCourse extends Command {
             Course course = courseDao.read(courseId);
 
             if (course != null) {
-                //Check that user is Admin or Course Owner
+                //check that user is Admin or Course Owner
                 if ((user.getIsTeacher() && course.isOwner(user)) || user.getIsAdmin()) {
                     courseDao.delete(course);
                     request.setAttribute("successMsg", COURSE_DELETED_SUCCESS);

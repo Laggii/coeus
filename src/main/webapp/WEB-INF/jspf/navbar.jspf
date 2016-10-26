@@ -17,8 +17,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="./">Home</a></li>
-                <li><a href="./main?action=profile">Profile</a></li>
+                <li><a href="./"><fmt:message key="navbar.link.home" /></a></li>
+                <li><a href="./main?action=profile"><fmt:message key="navbar.link.profile" /></a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -35,11 +35,11 @@
                 <c:if test="${sessionScope.user != null}">
                     <!-- TODO: modal -->
                     <a class="btn btn-default navbar-btn" role="button" href="./logout"><span
-                            class="glyphicon glyphicon-log-out"></span> Logout</a>
+                            class="glyphicon glyphicon-log-out"></span> <fmt:message key="navbar.button.logout" /></a>
                 </c:if>
                 <c:if test="${sessionScope.user == null}">
                     <a class="btn btn-default navbar-btn" role="button" href="./login"><span
-                            class="glyphicon glyphicon-log-in"></span> Login</a>
+                            class="glyphicon glyphicon-log-in"></span> <fmt:message key="navbar.button.login" /></a>
                 </c:if>
             </ul>
         </div>

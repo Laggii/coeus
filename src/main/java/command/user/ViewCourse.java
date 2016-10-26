@@ -20,6 +20,10 @@ import static service.MessageProvider.COURSE_NOT_FOUND_ERROR;
 /**
  * Created by Alexeev on 25.10.2016.
  */
+
+/**
+ * ViewCourse command processes user reqeust to see information about the course
+ */
 public class ViewCourse extends Command {
 
     private UserCoursesDao userCoursesDao;
@@ -45,6 +49,14 @@ public class ViewCourse extends Command {
         return "/main.jsp";
     }
 
+    /**
+     * Set information about the course that will be printed in JSP
+     *
+     * @param request
+     * @param course
+     * @return course page
+     * @throws DaoException
+     */
     private String setInfo(HttpServletRequest request, Course course) throws DaoException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");

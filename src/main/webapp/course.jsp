@@ -140,6 +140,7 @@
                                         <textarea class="form-control" name="description" maxlength="255"
                                                   required><c:out value="${courseInfo.description}"/></textarea>
                                     </div>
+                                    <input type="hidden" name="token" value="${token}">
                                     <input type="hidden" name="action" value="editcourse">
                                     <input type="hidden" name="id" value="${courseInfo.courseId}">
 

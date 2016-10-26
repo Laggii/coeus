@@ -34,6 +34,7 @@ public class AddFriend extends Command {
 
         String idParameter = request.getParameter("id");
 
+        //validate id from request
         if (InputValidator.validateId(idParameter)) {
             long friendId = Long.parseLong(idParameter);
             User friend = userDao.read(friendId);

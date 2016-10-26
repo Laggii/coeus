@@ -54,6 +54,7 @@
                                        type="password" required>
                             </div>
                         </div>
+                        <input type="hidden" name="token" value="${token}">
                         <button class="btn btn-sm btn-success" type="submit">Login</button>
                     </form>
                 </div>
@@ -113,6 +114,7 @@
                                 <input type="checkbox" name="teacher">I am a teacher
                             </label>
                         </div>
+                        <input type="hidden" name="token" value="${token}">
                         <button class="btn btn-sm btn-success" type="submit">Register</button>
                     </form>
                 </div>

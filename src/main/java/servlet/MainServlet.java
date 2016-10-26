@@ -21,7 +21,8 @@ import static service.MessageProvider.UNKNOWN_COMMAND;
  */
 
 /**
- * Main servlet implemented as a FrontController processes all user commands and returns page user will load
+ * Main servlet processes all user commands and returns page user will load
+ * implemented as a FrontController
  */
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
@@ -41,11 +42,10 @@ public class MainServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String commandName = request.getParameter("action");
         String path = "/profile.jsp";
-        Command command;
 
         if (commandName != null) {
             try {
-                command = CommandFactory.getInstance().getCommand(commandName);
+                Command command = CommandFactory.getInstance().getCommand(commandName);
                 path = command.execute(request, response);
             } catch (CommandException e) {
                 logger.error("Failed to process user command request:", e);

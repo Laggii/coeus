@@ -20,6 +20,10 @@ import static database.dao.utils.DaoUtils.buildRole;
 /**
  * Created by Alexeev on 03.10.2016.
  */
+
+/**
+ * Mysql implementation of the RoleDao
+ */
 public class RoleDaoImpl implements GenericDao<Role> {
 
     private ConnectionPool connectionPool;
@@ -28,7 +32,7 @@ public class RoleDaoImpl implements GenericDao<Role> {
 
     private PreparedStatement statement;
 
-    ResultSet resultSet;
+    private ResultSet resultSet;
 
     private static final Logger logger = Logger.getLogger(RoleDaoImpl.class);
 

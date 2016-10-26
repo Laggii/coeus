@@ -35,6 +35,7 @@ public class LocaleServlet extends HttpServlet {
 
     /**
      * Set locale in LocaleManager
+     *
      * @param request
      * @param response
      * @throws IOException
@@ -52,8 +53,6 @@ public class LocaleServlet extends HttpServlet {
                 localeManager.changeLocale(new Locale(EN_CODE));
                 session.setAttribute("language", EN_CODE);
             }
-        } else {
-            response.sendRedirect("./");
         }
 
         //return back to the page from where request came

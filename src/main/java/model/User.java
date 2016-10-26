@@ -7,6 +7,10 @@ import java.util.Objects;
 /**
  * Created by Alexeev on 29.09.2016.
  */
+
+/**
+ * User Bean with Builder pattern
+ */
 public class User {
 
     private long userId;

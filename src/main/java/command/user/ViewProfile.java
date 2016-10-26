@@ -81,7 +81,7 @@ public class ViewProfile extends Command {
         Collection<User> userFriends = userFriendsDao.getFriends(user);
         request.setAttribute("userFriends", userFriends);
 
-        //check that current user is our friend and show delete button
+        //check that current user is our friend and show remove button
         if (!user.equals(loggedUser)) {
             Collection<User> loggedUserFriends = userFriendsDao.getFriends(loggedUser);
             if (loggedUserFriends.contains(user)) {

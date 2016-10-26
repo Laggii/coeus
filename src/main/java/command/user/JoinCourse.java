@@ -20,7 +20,12 @@ import static service.MessageProvider.*;
 /**
  * Created by Alexeev on 25.10.2016.
  */
+
+/**
+ * JoinCourse command processes user request to join specified Course
+ */
 public class JoinCourse extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
@@ -31,6 +36,7 @@ public class JoinCourse extends Command {
 
         String idParameter = request.getParameter("id");
 
+        //validate id from request
         if (InputValidator.validateId(idParameter)) {
             long courseId = Long.parseLong(idParameter);
             Course course = courseDao.read(courseId);

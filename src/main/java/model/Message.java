@@ -6,6 +6,10 @@ import java.util.Objects;
 /**
  * Created by Alexeev on 29.09.2016.
  */
+
+/**
+ * Message Bean with Builder pattern
+ */
 public class Message {
 
     private long messageId;

@@ -25,8 +25,8 @@
     <div class="jumbotron">
         <div class="container">
             <h1><fmt:message key="login.label.welcome" />!</h1>
-            <p>Educational social network for students and teachers</p>
-            <p><a class="btn btn-primary btn-lg" href="./login" role="button">Sign in &raquo;</a></p>
+            <p><fmt:message key="index.label.info" /></p>
+            <p><a class="btn btn-primary btn-lg" href="./login" role="button"><fmt:message key="index.button.signin" /> &raquo;</a></p>
         </div>
     </div>
 
@@ -34,16 +34,16 @@
         <!-- Columns -->
         <div class="row">
             <div class="col-md-4">
-                <h2>For students</h2>
-                <p>Communicate with your friends and teachers. Find an educational course</p>
+                <h2><fmt:message key="index.label.student" /></h2>
+                <p><fmt:message key="index.text.student" /></p>
             </div>
             <div class="col-md-4">
-                <h2>For teachers</h2>
-                <p>Create and manage your courses with ease</p>
+                <h2><fmt:message key="index.label.teacher" /></h2>
+                <p><fmt:message key="index.text.teacher" /></p>
             </div>
             <div class="col-md-4">
-                <h2>For admins</h2>
-                <p>Monitor your social network. Take a full control.</p>
+                <h2><fmt:message key="index.label.admin" /></h2>
+                <p><fmt:message key="index.text.admin" /></p>
             </div>
         </div>
 

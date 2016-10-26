@@ -20,6 +20,10 @@ import static database.dao.utils.DaoUtils.buildUser;
 /**
  * Created by Alexeev on 24.10.2016.
  */
+
+/**
+ * Mysql implementation of the UserFriendsDao
+ */
 public class UserFriendsDaoImpl implements UserFriendsDao {
 
     private ConnectionPool connectionPool;

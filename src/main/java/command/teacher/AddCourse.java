@@ -24,6 +24,7 @@ import static service.MessageProvider.*;
  * AddCourse command processes Admin/Teacher request to create new course
  */
 public class AddCourse extends Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
         HttpSession session = request.getSession();
@@ -32,6 +33,7 @@ public class AddCourse extends Command {
         CourseDaoImpl courseDao = new CourseDaoImpl();
         UserCoursesDao userCoursesDao = new UserCoursesDaoImpl();
 
+        //check user rights
         if (!(user.getIsTeacher() || user.getIsAdmin())) {
             request.setAttribute("errorMsg", INSUFFICIENT_RIGHTS_ERROR);
             return "/main.jsp";
@@ -40,6 +42,7 @@ public class AddCourse extends Command {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
 
+        //validate input parameters
         MessageProvider validationResult = InputValidator.validateCourse(name, description);
         if (validationResult != VALID) {
             request.setAttribute("name", name);

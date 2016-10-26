@@ -22,6 +22,10 @@ import static database.dao.utils.DaoUtils.buildUser;
 /**
  * Created by Alexeev on 04.10.2016.
  */
+
+/**
+ * Mysql implementation of the CourseDao
+ */
 public class CourseDaoImpl implements GenericDao<Course> {
 
     private ConnectionPool connectionPool;

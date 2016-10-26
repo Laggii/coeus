@@ -100,6 +100,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="token" value="${token}">
                         <input type="hidden" name="action" value="editprofile">
                         <div class="form-group">
                             <label class="col-md-3 control-label"></label>
@@ -141,6 +142,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="action" value="changepassword">
+                        <input type="hidden" name="token" value="${token}">
                         <div class="form-group">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-8">

@@ -4,7 +4,6 @@ import command.Command;
 import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
 import database.dao.mysql.UserCoursesDaoImpl;
-import database.dao.mysql.UserDaoImpl;
 import exception.DaoException;
 import model.Course;
 import model.User;

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by Alexeev on 05.10.2016.
@@ -39,10 +38,10 @@ public class LoginFilter implements Filter {
         String context = req.getContextPath();
         String uri = req.getRequestURI();
 
-        boolean loggedIn = (session != null && session.getAttribute("user") != null);
-        boolean loginRequest = checkPath(uri.substring(context.length()));
+        boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
+        boolean isAllowedRequest = checkPath(uri.substring(context.length()));
 
-        if (loggedIn || loginRequest) {
+        if (isLoggedIn || isAllowedRequest) {
             chain.doFilter(req, resp);
         } else {
             logger.info("Blocking unauthorized access to " + uri);

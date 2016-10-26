@@ -20,7 +20,10 @@ import static database.dao.utils.DaoUtils.buildMessage;
 /**
  * Created by Alexeev on 04.10.2016.
  */
-//TODO: getting id using body is bad idea
+
+/**
+ * Mysql implementation of the MessageDao
+ */
 public class MessageDaoImpl implements GenericDao<Message> {
 
     private ConnectionPool connectionPool;
@@ -59,7 +62,6 @@ public class MessageDaoImpl implements GenericDao<Message> {
             throw new DaoException(e);
         }
     }
-
 
     @Override
     public boolean create(final Message message) throws DaoException {
