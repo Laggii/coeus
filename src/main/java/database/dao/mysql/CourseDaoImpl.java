@@ -52,7 +52,7 @@ public class CourseDaoImpl implements GenericDao<Course> {
             "DELETE FROM courses WHERE course_id = ?";
 
     private static final String GET_ID_QUERY =
-            "SELECT course_id FROM courses WHERE name = ?";
+            "SELECT course_id FROM courses WHERE name = ? ORDER BY course_id DESC LIMIT 1";
 
     private static final String GET_ALL_QUERY =
             "SELECT * FROM courses JOIN users ON courses.owner_id = users.user_id;";

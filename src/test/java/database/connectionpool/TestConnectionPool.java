@@ -19,8 +19,9 @@ import static org.junit.Assert.assertNotNull;
  */
 
 public class TestConnectionPool {
-    ConnectionPool connectionPool;
-    List<Connection> connections;
+    private ConnectionPool connectionPool;
+
+    private List<Connection> connections;
 
     @Before
     public void init() {

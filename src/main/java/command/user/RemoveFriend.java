@@ -40,7 +40,7 @@ public class RemoveFriend extends Command {
             User friend = userDao.read(friendId);
             Collection<User> friends = userFriendsDao.getFriends(user);
 
-            if (friend != null) {
+            if (friend != null && user.getUserId() != friendId) {
                 if (friends.contains(friend)) {
                     userFriendsDao.delFriend(user, friend);
                     request.setAttribute("successMsg", USER_DEL_FRIEND_SUCCESS);

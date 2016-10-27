@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  * Created by Alexeev on 14.10.2016.
  */
 public class TestLocaleManager {
-    LocaleManager localeManager = LocaleManager.getInstance();
+    private LocaleManager localeManager = LocaleManager.getInstance();
 
     @Test
     public void testGetValue() {

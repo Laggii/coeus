@@ -40,7 +40,7 @@ public class AddFriend extends Command {
             User friend = userDao.read(friendId);
             Collection<User> friends = userFriendsDao.getFriends(user);
 
-            if (friend != null) {
+            if (friend != null && user.getUserId() != friendId) {
                 if (!friends.contains(friend)) {
                     userFriendsDao.addFriend(user, friend);
                     request.setAttribute("successMsg", USER_ADD_FRIEND_SUCCESS);
