@@ -37,6 +37,7 @@ Since my project is related to study, students and teachers, I use this naming.
 - CSRF protection (token)
 
 ## TODO
+- Fix LocaleManager bug (1 language for all users)
 - Messages
 - Avatars
 - Translation of all JSP's
