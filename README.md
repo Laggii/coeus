@@ -15,6 +15,7 @@ Since my project is related to study, students and teachers, I use this naming.
 - Bootstrap for UI and quick start(1) (and a few plugins: DataTables(2), BootstrapFormHelper)
 - jBCrypt for password hashing(3) (BCrypt implementation on Java)
 - Tomcat as web server and servlet container
+- MariaDB as Database
 - JUnit for testing
 - Log4j for logging
 - Gradle
