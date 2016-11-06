@@ -15,27 +15,20 @@ public class LocaleManager {
 
     private final static LocaleManager instance = new LocaleManager();
 
-    //English by default
-    private ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_PATH, Locale.ENGLISH);
-
     public static LocaleManager getInstance() {
         return instance;
     }
 
     /**
-     * Change ResourceBundle by locale
-     * @param locale
-     */
-    public void changeLocale(Locale locale) {
-        bundle = ResourceBundle.getBundle("localization.locale", locale);
-    }
-
-    /**
-     * Get value from ResourceBundle
+     * Get value from ResourceBundle by Locale
+     *
      * @param key
+     * @param locale
      * @return value
      */
-    public String getValue(String key) {
-        return bundle.getString(key);
+    public String getValue(String key, Locale locale) {
+        return ResourceBundle
+                .getBundle("localization.locale", locale)
+                .getString(key);
     }
 }

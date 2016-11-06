@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 public class DBResourceManager {
     private final static DBResourceManager instance = new DBResourceManager();
 
-    private ResourceBundle bundle = ResourceBundle.getBundle("connectionpool.dbproduction");
+    private ResourceBundle bundle = ResourceBundle.getBundle("connectionpool.dbtest");
 
     public static DBResourceManager getInstance() {
         return instance;

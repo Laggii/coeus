@@ -69,18 +69,12 @@
                             <c:if test="${! (empty errorMsg)}">
                                 </br>
                                 </br>
-                                <div class="alert alert-danger">
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                    <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${errorMsg}"/>
-                                </div>
+                                <customtags:printMessage message="${errorMsg}" type="error"/>
                             </c:if>
                             <c:if test="${! (empty successMsg)}">
                                 </br>
                                 </br>
-                                <div class="alert alert-success">
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                    <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${successMsg}"/>
-                                </div>
+                                <customtags:printMessage message="${successMsg}" type="success"/>
                             </c:if>
                         </div>
                         <div class="media-right">
@@ -146,21 +140,11 @@
 
                                     <c:if test="${! (empty errorMsgModal)}">
                                         </br>
-                                        <div class="alert alert-danger">
-                                                    <span class="glyphicon glyphicon-exclamation-sign"
-                                                          aria-hidden="true"></span>
-                                            <a class="close" data-dismiss="alert" href="#">×</a><c:out
-                                                value="${errorMsgModal}"/>
-                                        </div>
+                                        <customtags:printMessage message="${errorMsgModal}" type="error"/>
                                     </c:if>
                                     <c:if test="${! (empty successMsgModal)}">
                                         </br>
-                                        <div class="alert alert-success">
-                                                    <span class="glyphicon glyphicon-exclamation-sign"
-                                                          aria-hidden="true"></span>
-                                            <a class="close" data-dismiss="alert" href="#">×</a><c:out
-                                                value="${successMsgModal}"/>
-                                        </div>
+                                        <customtags:printMessage message="${successMsgModal}" type="success"/>
                                     </c:if>
                                 </div>
                                 <div class="modal-footer">

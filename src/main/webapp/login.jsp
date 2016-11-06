@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://coeus.com/jsp/tags/customtags" prefix="customtags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="${lang}">
 <head>
@@ -122,10 +123,7 @@
             </div>
             <c:if test="${! (empty errorMsg)}">
                 </br>
-                <div class="alert alert-danger">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${errorMsg}"/>
-                </div>
+                <customtags:printMessage message="${errorMsg}" type="error"/>
             </c:if>
         </div>
 

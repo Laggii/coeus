@@ -105,21 +105,11 @@
                                     <input type="hidden" name="token" value="${token}">
                                     <c:if test="${! (empty errorMsg)}">
                                         </br>
-                                        <div class="alert alert-danger">
-                                                    <span class="glyphicon glyphicon-exclamation-sign"
-                                                          aria-hidden="true"></span>
-                                            <a class="close" data-dismiss="alert" href="#">×</a><c:out
-                                                value="${errorMsg}"/>
-                                        </div>
+                                        <customtags:printMessage message="${errorMsg}" type="error"/>
                                     </c:if>
                                     <c:if test="${! (empty successMsg)}">
                                         </br>
-                                        <div class="alert alert-success">
-                                                    <span class="glyphicon glyphicon-exclamation-sign"
-                                                          aria-hidden="true"></span>
-                                            <a class="close" data-dismiss="alert" href="#">×</a><c:out
-                                                value="${successMsg}"/>
-                                        </div>
+                                        <customtags:printMessage message="${successMsg}" type="success"/>
                                     </c:if>
                                 </div>
                                 <div class="modal-footer">

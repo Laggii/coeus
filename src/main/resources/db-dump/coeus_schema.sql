@@ -28,7 +28,7 @@ CREATE TABLE `courses` (
   PRIMARY KEY (`course_id`),
   KEY `owner_id` (`owner_id`),
   CONSTRAINT `owner_id` FOREIGN KEY (`owner_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for messages
@@ -41,7 +41,7 @@ CREATE TABLE `messages` (
   `body` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`message_id`,`id_from`,`id_to`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for roles
@@ -98,4 +98,4 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

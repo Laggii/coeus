@@ -10,7 +10,7 @@
     <uri>http://coeus.com/jsp/tags/customtags</uri>
     <tag>
         <name>printCourse</name>
-        <tag-class>jstl.CourseTableTag</tag-class>
+        <tag-class>tag.CourseTableTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>course</name>
@@ -20,11 +20,26 @@
     </tag>
     <tag>
         <name>printUser</name>
-        <tag-class>jstl.UserTableTag</tag-class>
+        <tag-class>tag.UserTableTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>user</name>
             <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>printMessage</name>
+        <tag-class>tag.MessageTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>message</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>type</name>
+            <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>

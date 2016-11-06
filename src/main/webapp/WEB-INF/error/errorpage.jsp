@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://coeus.com/jsp/tags/customtags" prefix="customtags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -18,8 +19,8 @@
         <div class="col-md-12">
             <div class="error-template">
                 <h1>${statusCode}</h1>
-                <div class="error-details">
-                    <c:out value="${errorMsg}"/>
+                <div class="error-details" style="margin:auto;width:300px;">
+                    <customtags:printMessage message="${errorMsg}" type="error"/>
                 </div>
                 <div class="error-actions">
                     <a href="${pageContext.request.contextPath}" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>

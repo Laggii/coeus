@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://coeus.com/jsp/tags/customtags" prefix="customtags" %>
 <c:set var="userSettings" value="${not empty requestScope.userSettings ? requestScope.userSettings : sessionScope.user}"
        scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -153,16 +154,15 @@
                 </div>
                 <c:if test="${! (empty errorMsg)}">
                     </br>
-                    <div class="alert alert-danger" style="margin-left:30px;margin-right:30px;">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${errorMsg}"/>
+                    <div style="margin-left:30px;margin-right:30px;">
+                        <customtags:printMessage message="${errorMsg}" type="error"/>
                     </div>
+
                 </c:if>
                 <c:if test="${! (empty successMsg)}">
                     </br>
-                    <div class="alert alert-success" style="margin-left:30px;margin-right:30px;">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <a class="close" data-dismiss="alert" href="#">×</a><c:out value="${successMsg}"/>
+                    <div style="margin-left:30px;margin-right:30px;">
+                        <customtags:printMessage message="${successMsg}" type="success"/>
                     </div>
                 </c:if>
             </div>

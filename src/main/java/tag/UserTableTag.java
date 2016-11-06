@@ -1,4 +1,4 @@
-package jstl;
+package tag;
 
 import model.User;
 
@@ -14,6 +14,7 @@ import java.io.IOException;
  * UserTableTag prints a single user information as a part of the table on page
  */
 public class UserTableTag extends TagSupport {
+
     private User user;
 
     public void setUser(User user) {

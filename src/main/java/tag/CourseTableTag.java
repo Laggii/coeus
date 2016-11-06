@@ -1,4 +1,4 @@
-package jstl;
+package tag;
 
 import model.Course;
 
@@ -14,6 +14,7 @@ import java.io.IOException;
  * CourseTableTag prints a single course information as a part of the table on page
  */
 public class CourseTableTag extends TagSupport {
+
     private Course course;
 
     public void setCourse(Course course) {

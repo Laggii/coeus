@@ -4,10 +4,13 @@ package service;
  * Created by Alexeev on 13.10.2016.
  */
 
+import java.util.Locale;
+
 /**
- * MessageProvider provides error and information messages with current language from LocaleManager
+ * MessageProvider provides error and information server messages with current language from LocaleManager
  */
 public enum MessageProvider {
+
     EMAIL_INVALID_ERROR("validator.error.email_invalid"),
     FIRSTNAME_INVALID_ERROR("validator.error.firstname_invalid"),
     LASTNAME_INVALID_ERROR("validator.error.lastname_invalid"),
@@ -55,8 +58,23 @@ public enum MessageProvider {
         this.propertyKey = propertyKey;
     }
 
+    /**
+     * Return translated Message value by Locale
+     *
+     * @param locale
+     * @return value
+     */
+    public String getLocalized(Locale locale) {
+        return localeManager.getValue(propertyKey, locale);
+    }
+
+    /**
+     * Return message value in English in case MessageTag not used
+     *
+     * @return String Message
+     */
     @Override
     public String toString() {
-        return localeManager.getValue(propertyKey);
+        return getLocalized(new Locale("en"));
     }
 }

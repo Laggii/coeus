@@ -14,23 +14,12 @@ public class TestLocaleManager {
 
     @Test
     public void testGetValue() {
-        localeManager.changeLocale(new Locale("en"));
-        String error403 = localeManager.getValue("servlet.error.403");
-
+        String error403 = localeManager.getValue("servlet.error.403", new Locale("en"));
         assertEquals("Access Denied", error403);
 
-        localeManager.changeLocale(new Locale("ru"));
-        error403 = localeManager.getValue("servlet.error.403");
-
+        error403 = localeManager.getValue("servlet.error.403", new Locale("ru"));
         assertEquals("Доступ запрещен", error403);
-    }
 
-    @Test
-    public void testErrorCodes() {
-        localeManager.changeLocale(new Locale("en"));
         assertEquals("Page not found", MessageProvider.STATUS_404_ERROR.toString());
-
-        localeManager.changeLocale(new Locale("ru"));
-        assertEquals("Страница не найдена", MessageProvider.STATUS_404_ERROR.toString());
     }
 }

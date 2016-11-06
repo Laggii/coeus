@@ -29,21 +29,20 @@ Since my project is related to study, students and teachers, I use this naming.
 
 ## Features
 - Homegrown Login and Registration with password encryption
-- Homegrown Roles system (Student/Teacher/Admin)
-- User profiles and Friends (add friend/remove friend)
+- Homegrown Roles (Student/Teacher/Admin)
+- User Profiles and Friends (add friend/remove friend)
 - Courses information (join/leave/create/edit)
 - Localization (ru/eng)
-- Full User input validation
+- Full user input validation
 - Error Handler (any application exceptions or http errors)
 - CSRF protection (token)
 
 ## TODO
-- Fix LocaleManager bug (1 language for all users)
 - Messages
 - Avatars
 - Translation of all JSP's
-- getAll() methods return full collections from database (no pagination, see notes) (5)
-- I query the database the whole time and the best choice is to use caching
+- Pagination (5)
+- Caching
 - Deploy demo with Docker and AWS
 - Screenshots
 
