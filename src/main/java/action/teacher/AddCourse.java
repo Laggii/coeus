@@ -1,6 +1,6 @@
-package command.teacher;
+package action.teacher;
 
-import command.Command;
+import action.Action;
 import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
 import database.dao.mysql.UserCoursesDaoImpl;
@@ -21,9 +21,9 @@ import static service.MessageProvider.*;
  */
 
 /**
- * AddCourse command processes Admin/Teacher request to create new course
+ * AddCourse action processes Admin/Teacher request to create new course
  */
-public class AddCourse extends Command {
+public class AddCourse extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {

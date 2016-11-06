@@ -25,7 +25,7 @@ Since my project is related to study, students and teachers, I use this naming.
 - DAO and Connection Pool
 - Builder ("must have" in model)
 - FrontController (only for /main servlet)
-- Strategy and FactoryMethod (4)
+- Strategy and FactoryMethod (Action package)
 
 ## Features
 - Homegrown Login and Registration with password encryption
@@ -41,14 +41,26 @@ Since my project is related to study, students and teachers, I use this naming.
 - Messages
 - Avatars
 - Translation of all JSP's
-- Pagination (5)
+- Pagination (4)
 - Caching
 - Deploy demo with Docker and AWS
-- Screenshots
+
+## Screenshots
+<details>
+  <summary> Welcome page </summary>
+![Alt text](/src/main/resources/screenshots/index.jpg?raw=true "Welcome page")
+</details>
+![Alt text](/src/main/resources/screenshots/login.jpg?raw=true "Login/Registration page")
+![Alt text](/src/main/resources/screenshots/profile.jpg?raw=true "Profiles")
+![Alt text](/src/main/resources/screenshots/courses.jpg?raw=true "Courses")
+![Alt text](/src/main/resources/screenshots/course.jpg?raw=true "Course Information")
+![Alt text](/src/main/resources/screenshots/friends.jpg?raw=true "Friends")
+![Alt text](/src/main/resources/screenshots/users.jpg?raw=true "Users")
+![Alt text](/src/main/resources/screenshots/settings.jpg?raw=true "Settings")
+![Alt text](/src/main/resources/screenshots/features.jpg?raw=true "Features")
 
 ## Notes
 - (1) Well, it wasn't really a quick start, I spent hours to get elements working and looking good.
 - (2) DataTables is an amazing, really amazing jQuery plugin with Bootstrap support. Provides new functionality for tables
 - (3) All I know it's not md5 (which is old and bad) and passwords are encrypted with salt.
-- (4) See Commands and CommandFactory. Yes, its named Command but it's still a Strategy pattern (should be renamed to Action mb)
-- (5) Well, yeah, I have search, sorting and pagination provided by DataTables but I get the whole table from db. This is not really good in production but fine for a small project.
+- (4) Well, yeah, I have search, sorting and pagination provided by DataTables but I get the whole table from db. This is not really good in production but fine for a small project.

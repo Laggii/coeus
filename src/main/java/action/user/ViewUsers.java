@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import database.dao.mysql.UserDaoImpl;
 import exception.DaoException;
 import model.User;
@@ -14,9 +14,9 @@ import java.util.Collection;
  */
 
 /**
- * ViewUsers command processes user request to see all users on site
+ * ViewUsers action processes user request to see all users on site
  */
-public class ViewUsers extends Command {
+public class ViewUsers extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {

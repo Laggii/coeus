@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import database.dao.mysql.UserDaoImpl;
 import exception.DaoException;
 import model.User;
@@ -25,9 +25,10 @@ import static service.MessageProvider.VALID;
  */
 
 /**
- * EditProfile command processes user request to change profile information
+ * EditProfile action processes user request to change profile information
  */
-public class EditProfile extends Command {
+public class EditProfile extends Action {
+
     private static final Logger logger = Logger.getLogger(EditProfile.class);
 
     @Override

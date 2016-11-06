@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import database.dao.interfaces.UserCoursesDao;
 import database.dao.interfaces.UserFriendsDao;
 import database.dao.mysql.UserCoursesDaoImpl;
@@ -24,13 +24,11 @@ import static service.MessageProvider.*;
  */
 
 /**
- * ViewProfile command processes user request to see user profile
+ * ViewProfile action processes user request to see user profile
  */
-public class ViewProfile extends Command {
+public class ViewProfile extends Action {
 
     private User loggedUser;
-
-    private UserDaoImpl userDao;
 
     private UserCoursesDao userCoursesDao;
 
@@ -41,7 +39,7 @@ public class ViewProfile extends Command {
         HttpSession session = request.getSession();
         loggedUser = (User) session.getAttribute("user");
 
-        userDao = new UserDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
         userCoursesDao = new UserCoursesDaoImpl();
         userFriendsDao = new UserFriendsDaoImpl();
 

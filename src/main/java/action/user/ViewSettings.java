@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 /**
- * ViewSettings command processes user request to see user settings page
+ * ViewSettings action processes user request to see user settings page
  */
-public class ViewSettings extends Command {
+public class ViewSettings extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {

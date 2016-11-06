@@ -1,6 +1,6 @@
-package command.teacher;
+package action.teacher;
 
-import command.Command;
+import action.Action;
 import database.dao.mysql.CourseDaoImpl;
 import exception.DaoException;
 import model.Course;
@@ -20,9 +20,9 @@ import static service.MessageProvider.*;
  */
 
 /**
- * EditCourse command processes Admin/Teacher request to change course information
+ * EditCourse action processes Admin/Teacher request to change course information
  */
-public class EditCourse extends Command {
+public class EditCourse extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {

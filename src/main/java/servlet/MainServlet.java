@@ -1,8 +1,8 @@
 package servlet;
 
-import command.Command;
-import command.CommandFactory;
-import exception.CommandException;
+import action.Action;
+import action.ActionFactory;
+import exception.ActionException;
 import exception.DaoException;
 import org.apache.log4j.Logger;
 
@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static service.MessageProvider.DATABASE_ERROR;
-import static service.MessageProvider.UNKNOWN_COMMAND;
+import static service.MessageProvider.UNKNOWN_ACTION;
 
 /**
  * Created by Alexeev on 09.10.2016.
  */
 
 /**
- * Main servlet processes all user commands and returns page user will load
+ * Main servlet processes all user "action" commands and returns page user will load
  * implemented as a FrontController
  */
 @WebServlet("/main")
@@ -45,11 +45,11 @@ public class MainServlet extends HttpServlet {
 
         if (commandName != null) {
             try {
-                Command command = CommandFactory.getInstance().getCommand(commandName);
-                path = command.execute(request, response);
-            } catch (CommandException e) {
-                logger.error("Failed to process user command request:", e);
-                request.setAttribute("errorMsg", UNKNOWN_COMMAND);
+                Action action = ActionFactory.getInstance().getAction(commandName);
+                path = action.execute(request, response);
+            } catch (ActionException e) {
+                logger.error("Failed to process user action request:", e);
+                request.setAttribute("errorMsg", UNKNOWN_ACTION);
                 path = "/main.jsp";
             } catch (DaoException e) {
                 logger.error("Database error:", e);

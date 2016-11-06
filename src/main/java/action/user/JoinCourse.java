@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
 import database.dao.mysql.UserCoursesDaoImpl;
@@ -22,9 +22,9 @@ import static service.MessageProvider.*;
  */
 
 /**
- * JoinCourse command processes user request to join specified Course
+ * JoinCourse action processes user request to join specified Course
  */
-public class JoinCourse extends Command {
+public class JoinCourse extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {

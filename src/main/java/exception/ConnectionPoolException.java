@@ -4,6 +4,7 @@ package exception;
  * Created by Alexeev on 26.09.2016.
  */
 public class ConnectionPoolException extends Exception {
+
     public ConnectionPoolException() {
         super();
     }

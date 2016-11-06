@@ -1,4 +1,4 @@
-package command;
+package action;
 
 import exception.DaoException;
 
@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 /**
- * Abstract Command with execute method which processes user request
+ * Abstract Action with execute method which processes user request
  * Implementation of the Strategy pattern
  */
-public abstract class Command {
+public abstract class Action {
 
     /**
-     * Execute command and return page where user should be forwarded
+     * Execute action and return page where user should be forwarded
      *
      * @param request
      * @param response

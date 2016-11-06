@@ -4,6 +4,7 @@ package exception;
  * Created by Alexeev on 21.10.2016.
  */
 public class DaoException extends Exception {
+
     public DaoException() {
         super();
     }

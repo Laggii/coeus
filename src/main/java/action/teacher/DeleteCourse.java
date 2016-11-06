@@ -1,9 +1,7 @@
-package command.user;
+package action.teacher;
 
-import command.Command;
-import database.dao.interfaces.UserCoursesDao;
+import action.Action;
 import database.dao.mysql.CourseDaoImpl;
-import database.dao.mysql.UserCoursesDaoImpl;
 import exception.DaoException;
 import model.Course;
 import model.User;
@@ -12,18 +10,17 @@ import service.InputValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 
 import static service.MessageProvider.*;
 
 /**
- * Created by Alexeev on 25.10.2016.
+ * Created by Alexeev on 23.10.2016.
  */
 
 /**
- * LeaveCourse command processes user request to leave specified Course
+ * DeleteCourse action processes Admin/Teacher request to delete course
  */
-public class LeaveCourse extends Command {
+public class DeleteCourse extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {
@@ -31,24 +28,22 @@ public class LeaveCourse extends Command {
         User user = (User) session.getAttribute("user");
 
         CourseDaoImpl courseDao = new CourseDaoImpl();
-        UserCoursesDao userCoursesDao = new UserCoursesDaoImpl();
 
         String idParameter = request.getParameter("id");
 
-        //validate id parameter
         if (InputValidator.validateId(idParameter)) {
             long courseId = Long.parseLong(idParameter);
             Course course = courseDao.read(courseId);
 
             if (course != null) {
-                Collection<Course> userCourses = userCoursesDao.getCourses(user);
-                if (userCourses.contains(course)) {
-                    userCoursesDao.leftCourse(user, course);
-                    request.setAttribute("successMsg", COURSE_LEFT_SUCCESS);
+                //check that user is Admin or Course Owner
+                if ((user.getIsTeacher() && course.isOwner(user)) || user.getIsAdmin()) {
+                    courseDao.delete(course);
+                    request.setAttribute("successMsg", COURSE_DELETED_SUCCESS);
                 } else {
-                    request.setAttribute("errorMsg", COURSE_NOT_JOINED_ERROR);
+                    request.setAttribute("errorMsg", INSUFFICIENT_RIGHTS_ERROR);
+                    return "/main?action=course&id=" + courseId;
                 }
-                return "/main?action=course&id=" + courseId;
             } else {
                 request.setAttribute("errorMsg", COURSE_NOT_FOUND_ERROR);
             }

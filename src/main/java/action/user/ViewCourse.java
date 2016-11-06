@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import database.dao.interfaces.UserCoursesDao;
 import database.dao.mysql.CourseDaoImpl;
 import database.dao.mysql.UserCoursesDaoImpl;
@@ -22,9 +22,9 @@ import static service.MessageProvider.COURSE_NOT_FOUND_ERROR;
  */
 
 /**
- * ViewCourse command processes user reqeust to see information about the course
+ * ViewCourse action processes user reqeust to see information about the course
  */
-public class ViewCourse extends Command {
+public class ViewCourse extends Action {
 
     private UserCoursesDao userCoursesDao;
 

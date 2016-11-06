@@ -1,6 +1,6 @@
-package command.user;
+package action.user;
 
-import command.Command;
+import action.Action;
 import database.dao.mysql.UserDaoImpl;
 import exception.DaoException;
 import model.User;
@@ -24,7 +24,7 @@ import static utils.Encryption.encryptPassword;
 /**
  * ChangePassword command processes user password change request
  */
-public class ChangePassword extends Command {
+public class ChangePassword extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws DaoException {

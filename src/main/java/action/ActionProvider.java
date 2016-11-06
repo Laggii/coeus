@@ -1,18 +1,18 @@
-package command;
+package action;
 
-import command.teacher.AddCourse;
-import command.teacher.DeleteCourse;
-import command.teacher.EditCourse;
-import command.user.*;
+import action.teacher.AddCourse;
+import action.teacher.DeleteCourse;
+import action.teacher.EditCourse;
+import action.user.*;
 
 /**
  * Created by Alexeev on 17.10.2016.
  */
 
 /**
- * CommandProvider provides mapping for action request parameter with corresponding Command Object
+ * ActionProvider provides mapping for action request parameter with corresponding Action Object
  */
-public enum CommandProvider {
+public enum ActionProvider {
     VIEW_USERS("users", new ViewUsers()),
     VIEW_COURSES("courses", new ViewCourses()),
     VIEW_COURSE("course", new ViewCourse()),
@@ -31,18 +31,18 @@ public enum CommandProvider {
 
     private final String name;
 
-    private final Command command;
+    private final Action action;
 
-    CommandProvider(String name, Command command) {
+    ActionProvider(String name, Action action) {
         this.name = name;
-        this.command = command;
+        this.action = action;
     }
 
     public String getName() {
         return name;
     }
 
-    public Command getCommand() {
-        return command;
+    public Action getAction() {
+        return action;
     }
 }
