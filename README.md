@@ -50,14 +50,38 @@ Since my project is related to study, students and teachers, I use this naming.
   <summary> Welcome page </summary>
 ![Alt text](/src/main/resources/screenshots/index.jpg?raw=true "Welcome page")
 </details>
+<details>
+  <summary> Login/Registration page </summary>
 ![Alt text](/src/main/resources/screenshots/login.jpg?raw=true "Login/Registration page")
+</details>
+<details>
+  <summary> Profiles </summary>
 ![Alt text](/src/main/resources/screenshots/profile.jpg?raw=true "Profiles")
+</details>
+<details>
+  <summary> Courses </summary>
 ![Alt text](/src/main/resources/screenshots/courses.jpg?raw=true "Courses")
-![Alt text](/src/main/resources/screenshots/course.jpg?raw=true "Course Information")
+</details>
+<details>
+  <summary> Course information </summary>
+![Alt text](/src/main/resources/screenshots/course.jpg?raw=true "Course information")
+</details>
+<details>
+  <summary> Friends </summary>
 ![Alt text](/src/main/resources/screenshots/friends.jpg?raw=true "Friends")
+</details>
+<details>
+  <summary> Users </summary>
 ![Alt text](/src/main/resources/screenshots/users.jpg?raw=true "Users")
+</details>
+<details>
+  <summary> Settings </summary>
 ![Alt text](/src/main/resources/screenshots/settings.jpg?raw=true "Settings")
+</details>
+<details>
+  <summary> More features </summary>
 ![Alt text](/src/main/resources/screenshots/features.jpg?raw=true "Features")
+</details>
 
 ## Notes
 - (1) Well, it wasn't really a quick start, I spent hours to get elements working and looking good.
