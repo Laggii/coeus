@@ -80,7 +80,7 @@ Since my project is related to study, students and teachers, I use this naming.
 </details>
 <details>
   <summary> More features </summary>
-![Alt text](/src/main/resources/screenshots/features.jpg?raw=true "Features")
+[Alt text](/src/main/resources/screenshots/features.jpg?raw=true "Features")
 </details>
 
 ## Notes
