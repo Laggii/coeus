@@ -45,46 +45,37 @@ Since my project is related to study, students and teachers, I use this naming.
 - Caching
 - Deploy demo with Docker and AWS
 
-## Screenshots
-<details>
-  <summary> Welcome page </summary>
-![Alt text](/src/main/resources/screenshots/index.jpg?raw=true "Welcome page")
-</details>
-<details>
-  <summary> Login/Registration page </summary>
-![Alt text](/src/main/resources/screenshots/login.jpg?raw=true "Login/Registration page")
-</details>
-<details>
-  <summary> Profiles </summary>
-![Alt text](/src/main/resources/screenshots/profile.jpg?raw=true "Profiles")
-</details>
-<details>
-  <summary> Courses </summary>
-![Alt text](/src/main/resources/screenshots/courses.jpg?raw=true "Courses")
-</details>
-<details>
-  <summary> Course information </summary>
-![Alt text](/src/main/resources/screenshots/course.jpg?raw=true "Course information")
-</details>
-<details>
-  <summary> Friends </summary>
-![Alt text](/src/main/resources/screenshots/friends.jpg?raw=true "Friends")
-</details>
-<details>
-  <summary> Users </summary>
-![Alt text](/src/main/resources/screenshots/users.jpg?raw=true "Users")
-</details>
-<details>
-  <summary> Settings </summary>
-![Alt text](/src/main/resources/screenshots/settings.jpg?raw=true "Settings")
-</details>
-<details>
-  <summary> More features </summary>
-[Alt text](/src/main/resources/screenshots/features.jpg?raw=true "Features")
-</details>
-
 ## Notes
 - (1) Well, it wasn't really a quick start, I spent hours to get elements working and looking good.
 - (2) DataTables is an amazing, really amazing jQuery plugin with Bootstrap support. Provides new functionality for tables
 - (3) All I know it's not md5 (which is old and bad) and passwords are encrypted with salt.
 - (4) Well, yeah, I have search, sorting and pagination provided by DataTables but I get the whole table from db. This is not really good in production but fine for a small project.
+
+## Screenshots
+
+Welcome page 
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/index.jpg)
+
+Login/Registration page
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/login.jpg)
+
+Profiles
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/profile.jpg)
+
+Courses
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/courses.jpg)
+
+Course information
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/course.jpg)
+
+Friends
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/friends.jpg)
+
+Users
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/users.jpg)
+
+Settings
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/settings.jpg)
+
+More features
+![](https://raw.githubusercontent.com/Laggii/Coeus/master/src/main/resources/screenshots/features.jpg)
